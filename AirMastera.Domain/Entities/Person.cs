@@ -1,5 +1,5 @@
 ﻿using System.Collections.ObjectModel;
-using System.Security.AccessControl;
+using System.Text.RegularExpressions;
 
 namespace AirMastera.Domain;
 
@@ -23,6 +23,7 @@ public class Person
 
     private void SetPhone(string phone)
     {
+        if(!Regex.IsMatch())
         Phone = phone;
     }
 }
