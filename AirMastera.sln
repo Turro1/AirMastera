@@ -2,6 +2,10 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AirMastera.Domain", "AirMastera.Domain\AirMastera.Domain.csproj", "{C25088D9-6DE6-4754-B440-BD1CC99F596E}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AirMastera.Tests", "AirMastera.Tests", "{E210B3E0-CB2D-4813-A46C-36C5AB97DA7A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AirMastera.Tests.Unit", "Airmastera.Tests\AirMastera.Tests.Unit\AirMastera.Tests.Unit.csproj", "{63184E57-6D30-4900-851F-284EE82B3F1D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +16,12 @@ Global
 		{C25088D9-6DE6-4754-B440-BD1CC99F596E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C25088D9-6DE6-4754-B440-BD1CC99F596E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C25088D9-6DE6-4754-B440-BD1CC99F596E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63184E57-6D30-4900-851F-284EE82B3F1D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63184E57-6D30-4900-851F-284EE82B3F1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63184E57-6D30-4900-851F-284EE82B3F1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63184E57-6D30-4900-851F-284EE82B3F1D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{63184E57-6D30-4900-851F-284EE82B3F1D} = {E210B3E0-CB2D-4813-A46C-36C5AB97DA7A}
 	EndGlobalSection
 EndGlobal
