@@ -4,11 +4,11 @@
         <TargetFramework>net6.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-        <RootNamespace>AirMastera.Application.Services</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\AirMastera.Domain\AirMastera.Domain.csproj" />
+      <ProjectReference Include="..\AirMastera.Application.Services\AirMastera.Application.Services.csproj" />
+      <ProjectReference Include="..\AirMastera.Infrastructure.Data\AirMastera.Infrastructure.Data.csproj" />
     </ItemGroup>
 
     <ItemGroup>

@@ -1,4 +1,5 @@
 using AirMastera.Domain;
+using AirMastera.Domain.Entities;
 using AirMastera.Domain.Exceptions;
 
 namespace AirMastera.Tests.Unit;

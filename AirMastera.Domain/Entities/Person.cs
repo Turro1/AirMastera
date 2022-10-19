@@ -3,10 +3,11 @@ using System.Text.RegularExpressions;
 using AirMastera.Domain.Exceptions;
 using AirMastera.Domain.HelpingClasses;
 
-namespace AirMastera.Domain;
+namespace AirMastera.Domain.Entities;
 
 public class Person
 {
+    public Guid Id { get; private set; }
     public string FullName { get; private set; }
     public string Phone { get; private set; }
     private readonly List<Car> _cars = new();

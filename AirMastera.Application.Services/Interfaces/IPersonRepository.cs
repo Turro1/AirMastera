@@ -1,5 +1,6 @@
 ﻿using AirMastera.Application.Services.Models;
 using AirMastera.Domain;
+using AirMastera.Domain.Entities;
 
 namespace AirMastera.Application.Services.Interfaces;
 

@@ -12,6 +12,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AirMastera.Application", "A
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AirMastera.Infrastructure", "AirMastera.Infrastructure", "{A784FE1D-BBDC-4786-8E21-B98A6D907E2D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AirMastera.Infrastructure.Repositories", "AirMastera.Infrastructure.Repositories\AirMastera.Infrastructure.Repositories.csproj", "{B448DC26-3DCF-4C27-B99E-BFBE04824870}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AirMastera.Infrastructure.Data", "AirMastera.Infrastructure.Data\AirMastera.Infrastructure.Data.csproj", "{24C580EB-5BFD-4E31-82E8-7AEE9EF7E91F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AirMastera.Infrastructure.Api", "AirMastera.Infrastructure.Api\AirMastera.Infrastructure.Api.csproj", "{180F37D9-2FED-4BBC-BEC1-067CC6D60C66}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AirMastera.DependencyInjection", "AirMastera.DependencyInjection\AirMastera.DependencyInjection.csproj", "{010A2C0C-C4FC-4319-AB26-9EAA6EEE9B30}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,9 +38,28 @@ Global
 		{8902D9EF-962D-449B-9038-AFA70BFCB79F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8902D9EF-962D-449B-9038-AFA70BFCB79F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8902D9EF-962D-449B-9038-AFA70BFCB79F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B448DC26-3DCF-4C27-B99E-BFBE04824870}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B448DC26-3DCF-4C27-B99E-BFBE04824870}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B448DC26-3DCF-4C27-B99E-BFBE04824870}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B448DC26-3DCF-4C27-B99E-BFBE04824870}.Release|Any CPU.Build.0 = Release|Any CPU
+		{24C580EB-5BFD-4E31-82E8-7AEE9EF7E91F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24C580EB-5BFD-4E31-82E8-7AEE9EF7E91F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24C580EB-5BFD-4E31-82E8-7AEE9EF7E91F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{24C580EB-5BFD-4E31-82E8-7AEE9EF7E91F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{180F37D9-2FED-4BBC-BEC1-067CC6D60C66}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{180F37D9-2FED-4BBC-BEC1-067CC6D60C66}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{180F37D9-2FED-4BBC-BEC1-067CC6D60C66}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{180F37D9-2FED-4BBC-BEC1-067CC6D60C66}.Release|Any CPU.Build.0 = Release|Any CPU
+		{010A2C0C-C4FC-4319-AB26-9EAA6EEE9B30}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{010A2C0C-C4FC-4319-AB26-9EAA6EEE9B30}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{010A2C0C-C4FC-4319-AB26-9EAA6EEE9B30}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{010A2C0C-C4FC-4319-AB26-9EAA6EEE9B30}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{63184E57-6D30-4900-851F-284EE82B3F1D} = {E210B3E0-CB2D-4813-A46C-36C5AB97DA7A}
 		{8902D9EF-962D-449B-9038-AFA70BFCB79F} = {618FD117-8A1E-44C2-906C-04E60195CF5B}
+		{B448DC26-3DCF-4C27-B99E-BFBE04824870} = {A784FE1D-BBDC-4786-8E21-B98A6D907E2D}
+		{24C580EB-5BFD-4E31-82E8-7AEE9EF7E91F} = {A784FE1D-BBDC-4786-8E21-B98A6D907E2D}
+		{180F37D9-2FED-4BBC-BEC1-067CC6D60C66} = {A784FE1D-BBDC-4786-8E21-B98A6D907E2D}
 	EndGlobalSection
 EndGlobal
