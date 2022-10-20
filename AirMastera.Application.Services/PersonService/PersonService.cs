@@ -16,7 +16,7 @@ public class PersonService : IPersonService
         _mapper = mapper;
     }
 
-    public async Task CreatePersonAsync(Person personRequest, CancellationToken cancellationToken)
+    public async Task CreatePersonAsync(CreatePersonRequest personRequest, CancellationToken cancellationToken)
     {
         var person = _mapper.Map<Person>(personRequest);
 

@@ -12,7 +12,7 @@ public class PersonTests
         //a
         var phone = "+33377750032";
         //a
-        var action = () => new Person("Турчанинов Роман", phone);
+        var action = () => new Person(Guid.NewGuid(),"Турчанинов Роман", phone);
         //a
         Assert.Throws<PhoneException>(action);
     }
@@ -23,7 +23,7 @@ public class PersonTests
         //a
         var fullName = "Турчанинов Роман ееееееееееееее";
         //a
-        var action = () => new Person(fullName, "+37377750032");
+        var action = () => new Person(Guid.NewGuid(),fullName ,"+37377750032");
         //a
         Assert.Throws<ArgumentException>(action);
     }

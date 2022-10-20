@@ -13,8 +13,9 @@ public class Person
     private readonly List<Car> _cars = new();
     public ReadOnlyCollection<Car> WorkExperiences => _cars.AsReadOnly();
 
-    public Person(string fullName, string phone)
+    public Person(Guid id, string fullName, string phone)
     {
+        Id = id;
         SetFullName(fullName);
         SetPhone(phone);
     }

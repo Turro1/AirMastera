@@ -1,6 +1,5 @@
 ﻿using AirMastera.Application.Services.Interfaces;
 using AirMastera.Application.Services.Models;
-using AirMastera.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AirMastera.Infrastructure.Api.Controllers;
@@ -24,7 +23,7 @@ public class PersonController : ControllerBase
     /// </summary>
     /// <returns>pong</returns>
     [HttpPost]
-    public  async Task<Person> Create(Person person, CancellationToken cancellationToken)
+    public  async Task<CreatePersonRequest> Create(CreatePersonRequest person, CancellationToken cancellationToken)
     {
         await _personService.CreatePersonAsync(person, cancellationToken);
         return person;

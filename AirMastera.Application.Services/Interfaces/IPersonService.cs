@@ -12,7 +12,7 @@ public interface IPersonService
     /// <param name="person"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task CreatePersonAsync(Person person, CancellationToken cancellationToken);
+    Task CreatePersonAsync(CreatePersonRequest person, CancellationToken cancellationToken);
 
     /// <summary>
     /// Обновление Person
