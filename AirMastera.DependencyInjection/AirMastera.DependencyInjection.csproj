@@ -8,7 +8,10 @@
 
     <ItemGroup>
       <ProjectReference Include="..\AirMastera.Application.Services\AirMastera.Application.Services.csproj" />
+      <ProjectReference Include="..\AirMastera.Application\AirMastera.Application.Services\AirMastera.Application.Services.csproj" />
       <ProjectReference Include="..\AirMastera.Infrastructure.Repositories\AirMastera.Infrastructure.Repositories.csproj" />
+      <ProjectReference Include="..\AirMastera.Infrastructure\AirMastera.Infrastructure.Data\AirMastera.Infrastructure.Data.csproj" />
+      <ProjectReference Include="..\AirMastera.Infrastructure\AirMastera.Infrastructure.Repositories\AirMastera.Infrastructure.Repositories.csproj" />
     </ItemGroup>
 
     <ItemGroup>
