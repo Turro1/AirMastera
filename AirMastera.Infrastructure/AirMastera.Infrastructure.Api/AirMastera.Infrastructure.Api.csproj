@@ -27,8 +27,7 @@
     <ItemGroup>
       <ProjectReference Include="..\..\AirMastera.Application\AirMastera.Application.Services\AirMastera.Application.Services.csproj" />
       <ProjectReference Include="..\..\AirMastera.DependencyInjection\AirMastera.DependencyInjection.csproj" />
-      <ProjectReference Include="..\AirMastera.DependencyInjection\AirMastera.DependencyInjection.csproj" />
-      <ProjectReference Include="..\AirMastera.Domain\AirMastera.Domain.csproj" />
+      <ProjectReference Include="..\..\AirMastera.Domain\AirMastera.Domain.csproj" />
       <ProjectReference Include="..\AirMastera.Infrastructure.Data\AirMastera.Infrastructure.Data.csproj" />
     </ItemGroup>
 

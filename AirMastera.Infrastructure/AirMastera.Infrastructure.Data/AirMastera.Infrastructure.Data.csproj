@@ -12,7 +12,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\AirMastera.Domain\AirMastera.Domain.csproj" />
     </ItemGroup>
 
 </Project>

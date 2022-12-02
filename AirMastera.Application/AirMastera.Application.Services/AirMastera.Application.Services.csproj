@@ -9,7 +9,6 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\AirMastera.Domain\AirMastera.Domain.csproj" />
-      <ProjectReference Include="..\AirMastera.Domain\AirMastera.Domain.csproj" />
     </ItemGroup>
 
     <ItemGroup>

@@ -3,7 +3,7 @@ using AirMastera.Application.Services.Models;
 using AirMastera.Domain.Entities;
 using AutoMapper;
 
-namespace AirMastera.Application.Services.Services;
+namespace AirMastera.Application.Services.PersonService;
 
 public class PersonService : IPersonService
 {
