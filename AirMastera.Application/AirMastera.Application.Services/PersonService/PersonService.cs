@@ -33,8 +33,25 @@ public class PersonService : IPersonService
         return await _personRepository.GetPersonDtoAsync(id, cancellationToken);
     }
 
+    public async Task<Person> GetPersonAsync(Guid id, CancellationToken cancellationToken)
+    {
+        return await _personRepository.GetPersonAsync(id, cancellationToken);
+    }
+
     public Task<PersonDto> DeletePersonDtoAsync(Guid id, CancellationToken cancellationToken)
     {
         throw new NotImplementedException();
+    }
+
+    public async Task<CarDto> SaveCarAsync(Guid id, SaveCarRequest car, CancellationToken cancellationToken)
+    {
+        {
+            var person = await _personRepository.GetPersonAsync(car.PersonId, cancellationToken);
+
+            person.SaveCar(id, car.Name, car.Model, car.Number,car.Avatar);
+
+            await _personRepository.UpdatePersonAsync(person, cancellationToken);
+            return await _personRepository.GetCarDtoAsync(id, cancellationToken);
+        }
     }
 }

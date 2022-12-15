@@ -20,6 +20,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AirMastera.Infrastructure.D
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AirMastera.Infrastructure.Repositories", "AirMastera.Infrastructure\AirMastera.Infrastructure.Repositories\AirMastera.Infrastructure.Repositories.csproj", "{E4B71552-B5B5-42A3-B54E-6B5EB59F5A03}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AirMastera.Tests.Integrations", "Airmastera.Tests\AirMastera.Tests.Integrations\AirMastera.Tests.Integrations.csproj", "{C8A4919D-CA85-419B-A416-675686DB62D8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -54,6 +56,10 @@ Global
 		{E4B71552-B5B5-42A3-B54E-6B5EB59F5A03}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E4B71552-B5B5-42A3-B54E-6B5EB59F5A03}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E4B71552-B5B5-42A3-B54E-6B5EB59F5A03}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C8A4919D-CA85-419B-A416-675686DB62D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C8A4919D-CA85-419B-A416-675686DB62D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C8A4919D-CA85-419B-A416-675686DB62D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C8A4919D-CA85-419B-A416-675686DB62D8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{63184E57-6D30-4900-851F-284EE82B3F1D} = {E210B3E0-CB2D-4813-A46C-36C5AB97DA7A}
@@ -61,5 +67,6 @@ Global
 		{31D31D86-64F8-446B-9EE4-8CF41130C1C4} = {A784FE1D-BBDC-4786-8E21-B98A6D907E2D}
 		{4A91B684-63C0-4F67-8B0D-24258FFA0A26} = {A784FE1D-BBDC-4786-8E21-B98A6D907E2D}
 		{E4B71552-B5B5-42A3-B54E-6B5EB59F5A03} = {A784FE1D-BBDC-4786-8E21-B98A6D907E2D}
+		{C8A4919D-CA85-419B-A416-675686DB62D8} = {E210B3E0-CB2D-4813-A46C-36C5AB97DA7A}
 	EndGlobalSection
 EndGlobal

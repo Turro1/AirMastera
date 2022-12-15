@@ -1,8 +1,8 @@
-﻿using DependencyInjection;
+﻿using AirMastera.DependencyInjection;
+using AirMastera.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using AirMastera.Infrastructure.Data;
 
 namespace Integrations;
 
@@ -22,7 +22,7 @@ public class MyServiceCollection
         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json")
+                .AddJsonFile("appsettings.local.json")
                 .AddJsonFile("appsettings.local.json", optional: true);
 
             var config = builder.Build();

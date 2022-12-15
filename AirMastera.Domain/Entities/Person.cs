@@ -35,4 +35,15 @@ public class Person
 
         Phone = phone;
     }
+
+    public void SaveCar(Guid id, string name, string model, string number, Uri avatar)
+    {
+        var currentItem = _cars.FirstOrDefault(x => x.Id == id);
+        if (currentItem != null)
+        {
+            _cars.Remove(currentItem);
+        }
+
+        _cars.Add(new Car(id, name,model, number, avatar));
+    }
 }

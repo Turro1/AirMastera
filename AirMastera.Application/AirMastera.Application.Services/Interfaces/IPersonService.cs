@@ -31,10 +31,20 @@ public interface IPersonService
     Task<PersonDto> GetPersonDtoAsync(Guid id, CancellationToken cancellationToken);
 
     /// <summary>
+    /// Получение PersonDto
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    Task<Person> GetPersonAsync(Guid id, CancellationToken cancellationToken);
+
+    /// <summary>
     /// Удаление PersonDto
     /// </summary>
     /// <param name="id"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     Task<PersonDto> DeletePersonDtoAsync(Guid id, CancellationToken cancellationToken);
+
+    Task<CarDto> SaveCarAsync(Guid id, SaveCarRequest car, CancellationToken cancellationToken);
 }

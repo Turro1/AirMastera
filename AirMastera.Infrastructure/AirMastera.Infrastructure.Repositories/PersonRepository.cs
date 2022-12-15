@@ -40,6 +40,14 @@ public class PersonRepository : IPersonRepository
         return personDto;
     }
 
+    public async Task<Person> GetPersonAsync(Guid id, CancellationToken cancellationToken)
+    {
+        var personDb = await GetPersonDb(id, cancellationToken);
+
+        var person = _mapper.Map<Person>(personDb);
+        return person;
+    }
+
     public Task<PersonDto> DeletePersonDtoAsync(Guid id, CancellationToken cancellationToken)
     {
         throw new NotImplementedException();
@@ -57,5 +65,27 @@ public class PersonRepository : IPersonRepository
         }
 
         return personDb;
+    }
+    
+    private async Task<CarDb> GetCarDb(Guid id, CancellationToken cancellationToken)
+    {
+        var carDb = await _dbContext.Cars.AsNoTracking()
+            .FirstOrDefaultAsync(car =>
+                car.Id == id, cancellationToken);
+
+        if (carDb == null)
+        {
+            throw new NotFoundException("Сущность c id: " + id + " не найдена в базе данных...");
+        }
+
+        return carDb;
+    }
+
+    public async Task<CarDto> GetCarDtoAsync(Guid id, CancellationToken cancellationToken)
+    {
+        var carDb = await GetCarDb(id, cancellationToken);
+
+        var personDto = _mapper.Map<CarDto>(carDb);
+        return personDto;
     }
 }

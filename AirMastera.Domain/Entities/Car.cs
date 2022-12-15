@@ -1,4 +1,6 @@
-﻿namespace AirMastera.Domain;
+﻿using System.Collections.ObjectModel;
+
+namespace AirMastera.Domain.Entities;
 
 public class Car
 {
@@ -7,10 +9,12 @@ public class Car
     public string Model { get; set; }
     public string Number { get; set; }
     public Uri Avatar { get; set; }
-    private readonly List<Repair> _repairs;
+    private readonly List<Repair> _repairs = new();
+    public ReadOnlyCollection<Repair> WorkExperiences => _repairs.AsReadOnly();
 
-    public Car(string name, string model,string number, Uri avatar)
+    public Car(Guid id, string name, string model, string number, Uri avatar)
     {
+        Id = id;
         SetName(name);
         SetModel(model);
         SetNumber(number);
