@@ -28,34 +28,29 @@ public class PersonRepository : IPersonRepository
         await _dbContext.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task UpdatePersonAsync(Person request, CancellationToken cancellationToken)
+    public async Task UpdatePersonAsync(Person person, CancellationToken cancellationToken)
     {
-        var personDb = _mapper.Map<PersonDb>(request);
+        var updatedPersonDb = _mapper.Map<PersonDb>(person);
 
-        _dbContext.Update(personDb);
+        _dbContext.Update(updatedPersonDb);
 
-        var oldWorkExperiences = await _dbContext.Cars.AsNoTracking()
-            .Where(a => a.PersonDbId == personDb.Id).ToListAsync(cancellationToken);
-
-        if (personDb.Cars?.Any() == true)
+        if (updatedPersonDb.Cars?.Any() == true)
         {
-            foreach (var item in personDb.Cars)
+            var oldCars = await _dbContext.Cars.AsNoTracking()
+                .Where(carDb => carDb.PersonDbId == updatedPersonDb.Id)
+                .ToListAsync(cancellationToken);
+
+            foreach (var carDb in updatedPersonDb.Cars)
             {
-                if (oldWorkExperiences.Any(x => x.Id == item.Id))
+                if (oldCars.Any(we => we.Id == carDb.Id))
                 {
-                    _dbContext.Update(personDb);
+                    _dbContext.Update(carDb);
                 }
                 else
                 {
-                    _dbContext.Cars.Add(item);
+                    _dbContext.Add(carDb);
                 }
             }
-
-            //_dbContext.RemoveRange(oldWorkExperiences.Except(personDb.Cars!).ToList());
-        }
-        else
-        {
-            _dbContext.RemoveRange(oldWorkExperiences);
         }
 
         await _dbContext.SaveChangesAsync(cancellationToken);

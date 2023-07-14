@@ -50,21 +50,13 @@ public static class TestHelper
         };
     }
 
-    public static IEnumerable<object[]> CreateAndUpdatePersonParameters()
+    public static IEnumerable<object[]> UpdatePersonParameters()
     {
         var person = new Faker<PersonDb>("ru")
             .RuleFor(u => u.FullName, x => (x.Name.FirstName() + " " + x.Name.LastName()))
             .RuleFor(u => u.Phone, f => f.Phone.PhoneNumber("+373777#####"));
 
         var updateUser = person.Generate();
-        var createUser = person.Generate();
-
-        var createPerson = new CreatePersonRequest
-        {
-            Id = Guid.NewGuid(),
-            Phone = createUser.Phone,
-            FullName = createUser.FullName
-        };
 
         var updatePerson = new UpdatePersonRequest
         {
@@ -74,28 +66,7 @@ public static class TestHelper
 
         yield return new object[]
         {
-            createPerson,
             updatePerson
-        };
-    }
-
-    public static IEnumerable<object[]> RemovePersonParameters()
-    {
-        var person = new Faker<PersonDb>("ru")
-            .RuleFor(u => u.FullName, x => (x.Name.FirstName() + " " + x.Name.LastName()))
-            .RuleFor(u => u.Phone, f => f.Phone.PhoneNumber("+373777#####"));
-
-        var createUser = person.Generate();
-
-        var createPerson = new UpdatePersonRequest
-        {
-            Phone = createUser.Phone,
-            FullName = createUser.FullName
-        };
-
-        yield return new object[]
-        {
-            createPerson.Id
         };
     }
 
@@ -103,20 +74,34 @@ public static class TestHelper
     {
         var car = new Faker<CarDb>("ru")
             .RuleFor(u => u.Name, x => x.Vehicle.Manufacturer())
-            .RuleFor(u => u.Model, f => f.Vehicle.Model());
+            .RuleFor(u => u.Model, f => f.Vehicle.Model())
+            .RuleFor(c => c.Avatar, x => new Uri(x.Image.PicsumUrl()));
 
-        var createCar = car.Generate();
+        var person = new Faker<PersonDb>("ru")
+            .RuleFor(u => u.FullName, x => (x.Name.FirstName() + " " + x.Name.LastName()))
+            .RuleFor(u => u.Phone, f => f.Phone.PhoneNumber("+373777#####"));
 
-        var createPerson = new SaveCarRequest
+        var updateUser = person.Generate();
+        var saveCar = car.Generate();
+
+        var updatePerson = new UpdatePersonRequest
         {
-            Id = Guid.NewGuid(),
-            /*Phone = createCar.Phone,
-            FullName = createCar.FullName*/
+            Phone = updateUser.Phone,
+            FullName = updateUser.FullName,
+            Car = new SaveCarRequest
+            {
+                Id = Guid.NewGuid(),
+                Name = saveCar.Name,
+                Model = saveCar.Model,
+                Number = new Random().Next(100, 999).ToString(),
+                Avatar = saveCar.Avatar,
+                PersonId = default
+            }
         };
 
         yield return new object[]
         {
-            createPerson,
+            updatePerson
         };
     }
 }

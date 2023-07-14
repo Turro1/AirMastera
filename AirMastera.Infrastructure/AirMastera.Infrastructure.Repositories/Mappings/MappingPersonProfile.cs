@@ -9,7 +9,13 @@ public class MappingPersonProfile : Profile
 {
     public MappingPersonProfile()
     {
-        CreateMap<UpdatePersonRequest, Person>();
+        CreateMap<UpdatePersonRequest, Person>()
+            .AfterMap((updateRequest, person) =>
+            {
+                var car = updateRequest.Car;
+                if (car != null)
+                    person.SaveCar(car.Id, car.Name, car.Model, car.Number, car.Avatar);
+            });
 
         CreateMap<CreatePersonRequest, Person>()
             .ConstructUsing(person =>

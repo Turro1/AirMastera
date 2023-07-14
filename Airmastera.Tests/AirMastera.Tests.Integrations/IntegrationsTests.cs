@@ -10,14 +10,17 @@ namespace Integrations;
 
 public class IntegrationsTests : IDisposable
 {
+    private readonly IServiceProvider _serviceProvider;
     private readonly CancellationToken _cancellationToken;
     private readonly IPersonService _service;
 
     public IntegrationsTests()
     {
-        var serviceProvider = new MyServiceCollection().CreateServiceProvider();
+        _serviceProvider = new MyServiceCollection().CreateServiceProvider();
         _cancellationToken = new CancellationToken();
-        _service = serviceProvider.GetRequiredService<IPersonService>();
+        _service = _serviceProvider.GetRequiredService<IPersonService>();
+        var db = _serviceProvider.GetRequiredService<AirMasteraDbContext>();
+        db.MigrateAndReloadTypes();
     }
 
     [Theory(DisplayName = "Добавляем запись в БД")]
@@ -33,12 +36,57 @@ public class IntegrationsTests : IDisposable
     }
 
     [Theory(DisplayName = "Обновляем запись в БД")]
-    [MemberData(nameof(TestHelper.CreateAndUpdatePersonParameters), MemberType = typeof(TestHelper))]
-    public async Task UpdateAndSavePerson(CreatePersonRequest expectedCreatePerson, UpdatePersonRequest expectedUpdatePerson)
+    [MemberData(nameof(TestHelper.UpdatePersonParameters), MemberType = typeof(TestHelper))]
+    public async Task UpdateAndSavePerson(UpdatePersonRequest expectedUpdatePerson)
     {
         //Arrange
-        await _service.CreatePersonAsync(expectedCreatePerson, _cancellationToken);
-        expectedUpdatePerson.Id = expectedCreatePerson.Id;
+        expectedUpdatePerson.Id = Guid.Parse("b41acc31-6a42-4fda-ad4f-47296e0f0e4f");
+
+        //Act
+        await _service.UpdatePersonAsync(expectedUpdatePerson, _cancellationToken);
+        var actual = _service.GetPersonAsync(expectedUpdatePerson.Id, _cancellationToken).Result;
+
+        //Assert
+        actual.FullName.Should().Be(expectedUpdatePerson.FullName);
+    }
+
+    [Theory(DisplayName = "Обновляем запись в БД")]
+    [MemberData(nameof(TestHelper.CreateCarParameters), MemberType = typeof(TestHelper))]
+    public async Task UpdateAndSaveCar(UpdatePersonRequest expectedUpdatePerson)
+    {
+        //Arrange
+        var personId = Guid.Parse("b41acc31-6a42-4fda-ad4f-47296e0f0e4f");
+
+        if (expectedUpdatePerson.Car != null)
+        {
+            expectedUpdatePerson.Car.PersonId = personId;
+            expectedUpdatePerson.Car.Id = Guid.Parse("23766d30-3d14-45dc-9168-1ad5316c1356");
+        }
+
+        expectedUpdatePerson.Id = personId;
+
+        //Act
+        await _service.UpdatePersonAsync(expectedUpdatePerson, _cancellationToken);
+        var actual = _service.GetPersonAsync(expectedUpdatePerson.Id, _cancellationToken).Result;
+
+        //Assert
+        actual.FullName.Should().Be(expectedUpdatePerson.FullName);
+    }
+
+    [Theory(DisplayName = "Обновляем запись в БД")]
+    [MemberData(nameof(TestHelper.CreateCarParameters), MemberType = typeof(TestHelper))]
+    public async Task UpdateAndSaveRepair(UpdatePersonRequest expectedUpdatePerson)
+    {
+        //Arrange
+        var personId = Guid.Parse("b41acc31-6a42-4fda-ad4f-47296e0f0e4f");
+
+        if (expectedUpdatePerson.Car != null)
+        {
+            expectedUpdatePerson.Car.PersonId = personId;
+            expectedUpdatePerson.Car.Id = Guid.Parse("23766d30-3d14-45dc-9168-1ad5316c1356");
+        }
+
+        expectedUpdatePerson.Id = personId;
 
         //Act
         await _service.UpdatePersonAsync(expectedUpdatePerson, _cancellationToken);
@@ -63,16 +111,16 @@ public class IntegrationsTests : IDisposable
         result.Should().Throw<NotFoundException>().WithMessage($"Сущность c id: {expectedCreatePerson.Id} не найдена в базе данных...");
     }
 
-/*[Theory(DisplayName = "Получаем запись из БД")]
-[MemberData(nameof(TestHelper.CreatePersonParameters), MemberType = typeof(TestHelper))]
-public async void GetPerson(CreatePersonRequest expectedCreatePerson)
-{
-    //Act
-    await _service.CreatePersonAsync(expectedCreatePerson, _cancellationToken);
-    var actual = _service.GetPersonAsync(expectedCreatePerson.Id, _cancellationToken).Result;
-    //Assert
-    actual.Surname.Should().NotBeEmpty();
-}*/
+    [Theory(DisplayName = "Получаем запись из БД")]
+    [MemberData(nameof(TestHelper.CreatePersonParameters), MemberType = typeof(TestHelper))]
+    public async void GetPerson(CreatePersonRequest expectedCreatePerson)
+    {
+        //Act
+        await _service.CreatePersonAsync(expectedCreatePerson, _cancellationToken);
+        var actual = _service.GetPersonAsync(expectedCreatePerson.Id, _cancellationToken).Result;
+        //Assert
+        actual.FullName.Should().NotBeEmpty();
+    }
 
     public void Dispose()
     {

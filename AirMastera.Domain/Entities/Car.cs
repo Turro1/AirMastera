@@ -10,7 +10,7 @@ public class Car
     public string Number { get; set; }
     public Uri Avatar { get; set; }
     private readonly List<Repair> _repairs = new();
-    public ReadOnlyCollection<Repair> WorkExperiences => _repairs.AsReadOnly();
+    public ReadOnlyCollection<Repair> Repairs => _repairs.AsReadOnly();
 
     public Car(Guid id, string name, string model, string number, Uri avatar)
     {
