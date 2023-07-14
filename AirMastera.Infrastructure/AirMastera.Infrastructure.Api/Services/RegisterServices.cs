@@ -20,7 +20,7 @@ public static class RegisterServices
         var builder = new ConfigurationBuilder()
             .SetBasePath(Directory.GetCurrentDirectory())
             .AddJsonFile("appsettings.json")
-            .AddJsonFile("appsettings.Development.json", optional: true);
+            .AddJsonFile("appsettings.local.json", optional: true);
         var config = builder.Build();
 
         services.AddDbContext<AirMasteraDbContext>(options =>

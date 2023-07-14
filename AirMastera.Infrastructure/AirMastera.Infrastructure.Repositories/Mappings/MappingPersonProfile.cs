@@ -9,29 +9,55 @@ public class MappingPersonProfile : Profile
 {
     public MappingPersonProfile()
     {
+        CreateMap<UpdatePersonRequest, Person>();
+
         CreateMap<CreatePersonRequest, Person>()
             .ConstructUsing(person =>
                 new Person(person.Id,
                     person.FullName,
-                    person.FullName));
+                    person.Phone));
 
         CreateMap<PersonDb, Person>()
             .ConstructUsing(personDb =>
-                new Person(personDb.Id, personDb.FullName, personDb.Phone));
-        CreateMap<Person, PersonDb>()
-            .ConstructUsing(person =>
-                new PersonDb()
+                new Person(
+                    personDb.Id,
+                    personDb.FullName,
+                    personDb.Phone)
+            )
+            .AfterMap((personDb, person) =>
+            {
+                foreach (var item in personDb.Cars!)
                 {
-                    FullName = person.FullName,
-                    Phone = person.Phone
-                });
+                    person.SaveCar(item.Id, item.Name, item.Model, item.Number, item.Avatar);
+                }
+            })
+            .ForAllMembers(p => p.Ignore());
 
-        CreateMap<PersonDb, Person>()
-            .ForMember(p => p.Id, o =>
-                o.MapFrom(p => p.Id))
-            .ForMember(p => p.Phone, o =>
-                o.MapFrom(p => p.Phone))
-            .ForMember(p => p.FullName, o =>
-                o.MapFrom(p => p.FullName));
+        CreateMap<Person, PersonDb>()
+            .ConstructUsing((person, context) => new PersonDb
+            {
+                Id = person.Id,
+                FullName = person.FullName,
+                Phone = person.Phone,
+                Cars = context.Mapper.Map<IEnumerable<CarDb>>(person.Cars)
+            })
+            .AfterMap((person, personDb) =>
+            {
+                foreach (var item in personDb.Cars!)
+                {
+                    item.PersonDbId = person.Id;
+                }
+            });
+
+        CreateMap<Car, CarDb>()
+            .ConstructUsing((workExperience) =>
+                new CarDb
+                {
+                    Id = workExperience.Id,
+                    Name = workExperience.Name,
+                    Model = workExperience.Model,
+                    Number = workExperience.Number,
+                    Avatar = workExperience.Avatar,
+                });
     }
 }

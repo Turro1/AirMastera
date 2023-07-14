@@ -11,7 +11,7 @@ public class Person
     public string FullName { get; private set; }
     public string Phone { get; private set; }
     private readonly List<Car> _cars = new();
-    public ReadOnlyCollection<Car> WorkExperiences => _cars.AsReadOnly();
+    public ReadOnlyCollection<Car> Cars => _cars.AsReadOnly();
 
     public Person(Guid id, string fullName, string phone)
     {

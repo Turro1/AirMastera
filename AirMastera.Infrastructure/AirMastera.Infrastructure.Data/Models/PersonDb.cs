@@ -1,6 +1,4 @@
-﻿using System.Collections.ObjectModel;
-
-namespace AirMastera.Infrastructure.Data.Models;
+﻿namespace AirMastera.Infrastructure.Data.Models;
 
 public class PersonDb
 {

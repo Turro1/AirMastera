@@ -22,7 +22,6 @@ public class MyServiceCollection
         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.local.json")
                 .AddJsonFile("appsettings.local.json", optional: true);
 
             var config = builder.Build();

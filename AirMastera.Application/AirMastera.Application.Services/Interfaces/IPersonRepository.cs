@@ -1,5 +1,4 @@
 ﻿using AirMastera.Application.Services.Models;
-using AirMastera.Domain;
 using AirMastera.Domain.Entities;
 
 namespace AirMastera.Application.Services.Interfaces;
@@ -17,10 +16,10 @@ public interface IPersonRepository
     /// <summary>
     /// Обновление Person
     /// </summary>
-    /// <param name="person"></param>
+    /// <param name="request"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task UpdatePersonAsync(Person person, CancellationToken cancellationToken);
+    Task UpdatePersonAsync(Person request, CancellationToken cancellationToken);
 
     /// <summary>
     /// Получение PersonDto
@@ -39,18 +38,18 @@ public interface IPersonRepository
     Task<Person> GetPersonAsync(Guid id, CancellationToken cancellationToken);
 
     /// <summary>
-    /// Удаление PersonDto
-    /// </summary>
-    /// <param name="id"></param>
-    /// <param name="cancellationToken"></param>
-    /// <returns></returns>
-    Task<PersonDto> DeletePersonDtoAsync(Guid id, CancellationToken cancellationToken);
-
-    /// <summary>
     /// Получение CarDto
     /// </summary>
     /// <param name="id"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     Task<CarDto> GetCarDtoAsync(Guid id, CancellationToken cancellationToken);
+
+    /// <summary>
+    /// Удаление Person
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    Task DeletePersonAsync(Guid id, CancellationToken cancellationToken);
 }

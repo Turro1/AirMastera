@@ -1,5 +1,6 @@
 ﻿using AirMastera.Application.Services.Interfaces;
 using AirMastera.Application.Services.Models;
+using AirMastera.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AirMastera.Infrastructure.Api.Controllers;
@@ -34,9 +35,9 @@ public class PersonController : ControllerBase
     /// </summary>
     /// <returns>pong</returns>
     [HttpGet]
-    public async Task<PersonDto> Get(Guid id, CancellationToken cancellationToken)
+    public async Task<Person> Get(Guid id, CancellationToken cancellationToken)
     {
-        var res = await _personService.GetPersonDtoAsync(id, cancellationToken);
+        var res = await _personService.GetPersonAsync(id, cancellationToken);
 
         return res;
     }

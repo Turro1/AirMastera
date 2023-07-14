@@ -48,6 +48,10 @@ public class AirMasteraDbContext : DbContext
             .IsUnique();
         modelBuilder
             .Entity<CarDb>()
+            .HasIndex(experience => experience.Number)
+            .IsUnique();
+        modelBuilder
+            .Entity<CarDb>()
             .Property(experience => experience.Name)
             .HasMaxLength(250);
         modelBuilder

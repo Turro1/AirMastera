@@ -16,20 +16,49 @@ public class PersonRepository : IPersonRepository
 
     public PersonRepository(IMapper mapper, AirMasteraDbContext dbContext)
     {
-        _mapper = mapper;
-        _dbContext = dbContext;
+        _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+        _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
     }
 
     public async Task CreatePersonAsync(Person request, CancellationToken cancellationToken)
     {
         var personDb = _mapper.Map<PersonDb>(request);
         _dbContext.Persons.Add(personDb);
+
         await _dbContext.SaveChangesAsync(cancellationToken);
     }
 
-    public Task UpdatePersonAsync(Person person, CancellationToken cancellationToken)
+    public async Task UpdatePersonAsync(Person request, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        var personDb = _mapper.Map<PersonDb>(request);
+
+        _dbContext.Update(personDb);
+
+        var oldWorkExperiences = await _dbContext.Cars.AsNoTracking()
+            .Where(a => a.PersonDbId == personDb.Id).ToListAsync(cancellationToken);
+
+        if (personDb.Cars?.Any() == true)
+        {
+            foreach (var item in personDb.Cars)
+            {
+                if (oldWorkExperiences.Any(x => x.Id == item.Id))
+                {
+                    _dbContext.Update(personDb);
+                }
+                else
+                {
+                    _dbContext.Cars.Add(item);
+                }
+            }
+
+            //_dbContext.RemoveRange(oldWorkExperiences.Except(personDb.Cars!).ToList());
+        }
+        else
+        {
+            _dbContext.RemoveRange(oldWorkExperiences);
+        }
+
+        await _dbContext.SaveChangesAsync(cancellationToken);
     }
 
     public async Task<PersonDto> GetPersonDtoAsync(Guid id, CancellationToken cancellationToken)
@@ -48,14 +77,9 @@ public class PersonRepository : IPersonRepository
         return person;
     }
 
-    public Task<PersonDto> DeletePersonDtoAsync(Guid id, CancellationToken cancellationToken)
-    {
-        throw new NotImplementedException();
-    }
-
     private async Task<PersonDb> GetPersonDb(Guid id, CancellationToken cancellationToken)
     {
-        var personDb = await _dbContext.Persons.AsNoTracking().Include(db => db.Cars)
+        var personDb = await _dbContext.Persons //.AsNoTracking().Include(db => db.Cars)
             .FirstOrDefaultAsync(person =>
                 person.Id == id, cancellationToken);
 
@@ -66,7 +90,7 @@ public class PersonRepository : IPersonRepository
 
         return personDb;
     }
-    
+
     private async Task<CarDb> GetCarDb(Guid id, CancellationToken cancellationToken)
     {
         var carDb = await _dbContext.Cars.AsNoTracking()
@@ -87,5 +111,13 @@ public class PersonRepository : IPersonRepository
 
         var personDto = _mapper.Map<CarDto>(carDb);
         return personDto;
+    }
+
+    public async Task DeletePersonAsync(Guid id, CancellationToken cancellationToken)
+    {
+        var personDb = await GetPersonDb(id, cancellationToken);
+
+        _dbContext.Remove(personDb);
+        await _dbContext.SaveChangesAsync(cancellationToken);
     }
 }

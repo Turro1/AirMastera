@@ -1,5 +1,4 @@
 ﻿using AirMastera.Application.Services.Models;
-using AirMastera.Domain;
 using AirMastera.Domain.Entities;
 
 namespace AirMastera.Application.Services.Interfaces;
@@ -9,26 +8,20 @@ public interface IPersonService
     /// <summary>
     /// Создание Person
     /// </summary>
-    /// <param name="person"></param>
+    /// <param name="request"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task CreatePersonAsync(CreatePersonRequest person, CancellationToken cancellationToken);
+    Task CreatePersonAsync(CreatePersonRequest request, CancellationToken cancellationToken);
+
+    Task<CarDto> SaveWorkExperienceAsync(Guid id, SaveCarRequest request, CancellationToken cancellationToken);
 
     /// <summary>
     /// Обновление Person
     /// </summary>
-    /// <param name="person"></param>
+    /// <param name="request"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task UpdatePersonAsync(Person person, CancellationToken cancellationToken);
-
-    /// <summary>
-    /// Получение PersonDto
-    /// </summary>
-    /// <param name="id"></param>
-    /// <param name="cancellationToken"></param>
-    /// <returns></returns>
-    Task<PersonDto> GetPersonDtoAsync(Guid id, CancellationToken cancellationToken);
+    Task UpdatePersonAsync(UpdatePersonRequest request, CancellationToken cancellationToken);
 
     /// <summary>
     /// Получение PersonDto
@@ -38,13 +31,7 @@ public interface IPersonService
     /// <returns></returns>
     Task<Person> GetPersonAsync(Guid id, CancellationToken cancellationToken);
 
-    /// <summary>
-    /// Удаление PersonDto
-    /// </summary>
-    /// <param name="id"></param>
-    /// <param name="cancellationToken"></param>
-    /// <returns></returns>
-    Task<PersonDto> DeletePersonDtoAsync(Guid id, CancellationToken cancellationToken);
-
     Task<CarDto> SaveCarAsync(Guid id, SaveCarRequest car, CancellationToken cancellationToken);
+
+    Task DeletePersonAsync(Guid id, CancellationToken cancellationToken);
 }
