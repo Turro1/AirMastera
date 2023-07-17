@@ -40,4 +40,15 @@ public class Car
     {
         Avatar = avatar;
     }
+
+    public void SaveRepair(Guid id, string partName, string partType, decimal price, DateTime appointmentDate)
+    {
+        var currentItem = _repairs.FirstOrDefault(x => x.Id == id);
+        if (currentItem != null)
+        {
+            _repairs.Remove(currentItem);
+        }
+
+        _repairs.Add(new Repair(id, partName, partType, price, appointmentDate));
+    }
 }

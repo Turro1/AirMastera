@@ -23,21 +23,18 @@ public class PersonService : IPersonService
         await _personRepository.CreatePersonAsync(person, cancellationToken);
     }
 
-    public async Task<CarDto> SaveWorkExperienceAsync(Guid id, SaveCarRequest car, CancellationToken cancellationToken)
-    {
-        var person = await _personRepository.GetPersonAsync(car.PersonId, cancellationToken);
-
-        person.SaveCar(id, car.Name, car.Model, car.Number, car.Avatar);
-
-        await _personRepository.UpdatePersonAsync(person, cancellationToken);
-        return await _personRepository.GetCarDtoAsync(id, cancellationToken);
-    }
-
     public async Task UpdatePersonAsync(UpdatePersonRequest request, CancellationToken cancellationToken)
     {
         var person = _mapper.Map<Person>(request);
 
         await _personRepository.UpdatePersonAsync(person, cancellationToken);
+    }
+
+    public async Task UpdateCarAsync(UpdateCarRequest request, CancellationToken cancellationToken)
+    {
+        var car = _mapper.Map<Car>(request);
+
+        await _personRepository.UpdateCarAsync(car, cancellationToken);
     }
 
     public async Task<PersonDto> GetPersonDtoAsync(Guid id, CancellationToken cancellationToken)
@@ -48,6 +45,11 @@ public class PersonService : IPersonService
     public async Task<Person> GetPersonAsync(Guid id, CancellationToken cancellationToken)
     {
         return await _personRepository.GetPersonAsync(id, cancellationToken);
+    }
+
+    public async Task<Car> GetCarAsync(Guid id, CancellationToken cancellationToken)
+    {
+        return await _personRepository.GetCarAsync(id, cancellationToken);
     }
 
     public async Task<CarDto> SaveCarAsync(Guid id, SaveCarRequest car, CancellationToken cancellationToken)

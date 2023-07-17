@@ -1,4 +1,5 @@
 ﻿using Bogus;
+using Bogus.DataSets;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
 using AirMastera.Application.Services.Models;
@@ -96,6 +97,51 @@ public static class TestHelper
                 Number = new Random().Next(100, 999).ToString(),
                 Avatar = saveCar.Avatar,
                 PersonId = default
+            }
+        };
+
+        yield return new object[]
+        {
+            updatePerson
+        };
+    }
+
+    public static IEnumerable<object[]> CreateRepairParameters()
+    {
+        string[] carParts = new string[] { "Двигатель", "Коробка передач", "Сцепление", "Тормозные колодки", "Шины" };
+
+        var car = new Faker<CarDb>("ru")
+            .RuleFor(u => u.Name, x => x.Vehicle.Manufacturer())
+            .RuleFor(u => u.Model, f => f.Vehicle.Model())
+            .RuleFor(c => c.Avatar, x => new Uri(x.Image.PicsumUrl()));
+
+        var repair = new Faker<RepairDb>("ru")
+            .RuleFor(u => u.Price, x => x.Commerce.Random.Decimal(150, 5000))
+            .RuleFor(u => u.PartName, f => f.Vehicle.Fuel())
+            .RuleFor(u => u.PartType, f => f.Vehicle.Type());
+
+        var saveCar = car.Generate();
+        var saveRepair = repair.Generate();
+
+        var start = new DateTime(2023, 07, 13);
+        var end = start.AddYears(1);
+        var random = new Random();
+        var range = (end - start).Days;
+        var randomDate = start.AddDays(random.Next(range));
+
+        var updatePerson = new UpdateCarRequest
+        {
+            Name = saveCar.Name,
+            Model = saveCar.Model,
+            Number = new Random().Next(100, 999).ToString(),
+            Avatar = saveCar.Avatar,
+            Repair = new SaveRepairRequest
+            {
+                Id = Guid.NewGuid(),
+                PartName = saveRepair.PartName,
+                PartType = saveRepair.PartType,
+                Price = saveRepair.Price,
+                AppointmentDate = randomDate,
             }
         };
 

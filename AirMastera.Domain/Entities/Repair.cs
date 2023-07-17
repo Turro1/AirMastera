@@ -1,4 +1,4 @@
-﻿namespace AirMastera.Domain;
+﻿namespace AirMastera.Domain.Entities;
 
 public class Repair
 {
@@ -6,17 +6,16 @@ public class Repair
     public string PartName { get; set; }
     public string PartType { get; set; }
 
-    public string Price { get; set; }
+    public decimal Price { get; set; }
     public DateTime AppointmentDate { get; set; }
-    public DateTime AppointmentTime { get; set; }
 
-    public Repair(string partName, string partType, string price, DateTime appointmentDate, DateTime appointmentTime)
+    public Repair(Guid id, string partName, string partType, decimal price, DateTime appointmentDate)
     {
+        Id = id;
         SetPartName(partName);
         SetPartType(partType);
         SetPrice(price);
         SetAppointmentDate(appointmentDate);
-        SetAppointmentTime(appointmentTime);
     }
 
     public void SetPartName(string partName)
@@ -29,7 +28,7 @@ public class Repair
         PartType = partType;
     }
 
-    private void SetPrice(string price)
+    private void SetPrice(decimal price)
     {
         Price = price;
     }
@@ -37,10 +36,5 @@ public class Repair
     private void SetAppointmentDate(DateTime appointmentDate)
     {
         AppointmentDate = appointmentDate;
-    }
-
-    private void SetAppointmentTime(DateTime appointmentTime)
-    {
-        AppointmentTime = appointmentTime;
     }
 }

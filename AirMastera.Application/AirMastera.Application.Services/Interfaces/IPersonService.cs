@@ -13,8 +13,6 @@ public interface IPersonService
     /// <returns></returns>
     Task CreatePersonAsync(CreatePersonRequest request, CancellationToken cancellationToken);
 
-    Task<CarDto> SaveWorkExperienceAsync(Guid id, SaveCarRequest request, CancellationToken cancellationToken);
-
     /// <summary>
     /// Обновление Person
     /// </summary>
@@ -24,12 +22,28 @@ public interface IPersonService
     Task UpdatePersonAsync(UpdatePersonRequest request, CancellationToken cancellationToken);
 
     /// <summary>
+    /// Обновление Person
+    /// </summary>
+    /// <param name="request"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    Task UpdateCarAsync(UpdateCarRequest request, CancellationToken cancellationToken);
+
+    /// <summary>
     /// Получение PersonDto
     /// </summary>
     /// <param name="id"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     Task<Person> GetPersonAsync(Guid id, CancellationToken cancellationToken);
+
+    /// <summary>
+    /// Получение Car
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    Task<Car> GetCarAsync(Guid id, CancellationToken cancellationToken);
 
     Task<CarDto> SaveCarAsync(Guid id, SaveCarRequest car, CancellationToken cancellationToken);
 

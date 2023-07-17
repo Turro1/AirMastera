@@ -2,13 +2,12 @@
 
 public class RepairDb
 {
-    public Guid Id { get; }
+    public Guid Id { get; set; }
     public string PartName { get; set; }
     public string PartType { get; set; }
 
-    public string Price { get; set; }
+    public decimal Price { get; set; }
     public DateTime AppointmentDate { get; set; }
-    public DateTime AppointmentTime { get; set; }
 
     /// <summary>
     /// Внешний ключ Pesron

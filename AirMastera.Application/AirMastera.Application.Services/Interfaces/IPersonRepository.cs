@@ -22,6 +22,14 @@ public interface IPersonRepository
     Task UpdatePersonAsync(Person request, CancellationToken cancellationToken);
 
     /// <summary>
+    /// Обновление Person
+    /// </summary>
+    /// <param name="request"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    Task UpdateCarAsync(Car request, CancellationToken cancellationToken);
+
+    /// <summary>
     /// Получение PersonDto
     /// </summary>
     /// <param name="id"></param>
@@ -44,6 +52,14 @@ public interface IPersonRepository
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     Task<CarDto> GetCarDtoAsync(Guid id, CancellationToken cancellationToken);
+
+    /// <summary>
+    /// Получение Car
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    Task<Car> GetCarAsync(Guid id, CancellationToken cancellationToken);
 
     /// <summary>
     /// Удаление Person

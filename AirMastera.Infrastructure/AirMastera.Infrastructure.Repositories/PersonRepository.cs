@@ -56,6 +56,37 @@ public class PersonRepository : IPersonRepository
         await _dbContext.SaveChangesAsync(cancellationToken);
     }
 
+    public async Task UpdateCarAsync(Car car, CancellationToken cancellationToken)
+    {
+        var updatedPersonDb = _mapper.Map<CarDb>(car);
+
+        var personId = (await GetCarDb(car.Id, cancellationToken)).PersonDbId;
+        updatedPersonDb.PersonDbId = personId;
+
+        _dbContext.Update(updatedPersonDb);
+
+        if (updatedPersonDb.Repairs?.Any() == true)
+        {
+            var oldCars = await _dbContext.Repairs.AsNoTracking()
+                .Where(carDb => carDb.CarDbId == updatedPersonDb.Id)
+                .ToListAsync(cancellationToken);
+
+            foreach (var carDb in updatedPersonDb.Repairs)
+            {
+                if (oldCars.Any(we => we.Id == carDb.Id))
+                {
+                    _dbContext.Update(carDb);
+                }
+                else
+                {
+                    _dbContext.Add(carDb);
+                }
+            }
+        }
+
+        await _dbContext.SaveChangesAsync(cancellationToken);
+    }
+
     public async Task<PersonDto> GetPersonDtoAsync(Guid id, CancellationToken cancellationToken)
     {
         var personDb = await GetPersonDb(id, cancellationToken);
@@ -88,7 +119,7 @@ public class PersonRepository : IPersonRepository
 
     private async Task<CarDb> GetCarDb(Guid id, CancellationToken cancellationToken)
     {
-        var carDb = await _dbContext.Cars.AsNoTracking()
+        var carDb = await _dbContext.Cars.AsNoTracking().Include(x => x.Repairs)
             .FirstOrDefaultAsync(car =>
                 car.Id == id, cancellationToken);
 
@@ -106,6 +137,14 @@ public class PersonRepository : IPersonRepository
 
         var personDto = _mapper.Map<CarDto>(carDb);
         return personDto;
+    }
+
+    public async Task<Car> GetCarAsync(Guid id, CancellationToken cancellationToken)
+    {
+        var carDb = await GetCarDb(id, cancellationToken);
+
+        var car = _mapper.Map<Car>(carDb);
+        return car;
     }
 
     public async Task DeletePersonAsync(Guid id, CancellationToken cancellationToken)
