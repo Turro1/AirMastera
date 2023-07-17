@@ -52,18 +52,6 @@ public class PersonService : IPersonService
         return await _personRepository.GetCarAsync(id, cancellationToken);
     }
 
-    public async Task<CarDto> SaveCarAsync(Guid id, SaveCarRequest car, CancellationToken cancellationToken)
-    {
-        {
-            var person = await _personRepository.GetPersonAsync(car.PersonId, cancellationToken);
-
-            person.SaveCar(id, car.Name, car.Model, car.Number, car.Avatar);
-
-            await _personRepository.UpdatePersonAsync(person, cancellationToken);
-            return await _personRepository.GetCarDtoAsync(id, cancellationToken);
-        }
-    }
-
     public async Task DeletePersonAsync(Guid id, CancellationToken cancellationToken)
     {
         await _personRepository.DeletePersonAsync(id, cancellationToken);

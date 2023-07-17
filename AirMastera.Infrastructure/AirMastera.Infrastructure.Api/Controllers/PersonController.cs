@@ -1,6 +1,5 @@
 ﻿using AirMastera.Application.Services.Interfaces;
 using AirMastera.Application.Services.Models;
-using AirMastera.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AirMastera.Infrastructure.Api.Controllers;
@@ -22,23 +21,49 @@ public class PersonController : ControllerBase
     /// <summary>
     /// Создание персоны
     /// </summary>
-    /// <returns>pong</returns>
+    /// <param name="person"></param>
+    /// <param name="cancellationToken"></param>
     [HttpPost]
-    public  async Task<CreatePersonRequest> Create(CreatePersonRequest person, CancellationToken cancellationToken)
+    [Route("Create")]
+    public async Task Create(CreatePersonRequest person, CancellationToken cancellationToken)
     {
         await _personService.CreatePersonAsync(person, cancellationToken);
-        return person;
+    }
+
+    /// <summary>
+    /// Обновление персоны и создание авто
+    /// </summary>
+    /// <param name="request"></param>
+    /// <param name="cancellationToken"></param>
+    [HttpPost]
+    [Route("SaveOrUpdateCar")]
+    public async Task SaveOrUpdateCar(UpdatePersonRequest request, CancellationToken cancellationToken)
+    {
+        await _personService.UpdatePersonAsync(request, cancellationToken);
+    }
+
+    /// <summary>
+    /// Обновление авто и создание ремонта
+    /// </summary>
+    /// <param name="request"></param>
+    /// <param name="cancellationToken"></param>
+    [HttpPost]
+    [Route("SaveOrUpdateRepair")]
+    public async Task SaveOrUpdateRepair(UpdateCarRequest request, CancellationToken cancellationToken)
+    {
+        await _personService.UpdateCarAsync(request, cancellationToken);
     }
 
     /// <summary>
     /// Получение персоны
     /// </summary>
-    /// <returns>pong</returns>
+    /// <param name="id"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
     [HttpGet]
-    public async Task<Person> Get(Guid id, CancellationToken cancellationToken)
+    [Route("Get")]
+    public async Task<ActionResult> Get(Guid id, CancellationToken cancellationToken)
     {
-        var res = await _personService.GetPersonAsync(id, cancellationToken);
-
-        return res;
+        return Ok(await _personService.GetPersonAsync(id, cancellationToken));
     }
 }

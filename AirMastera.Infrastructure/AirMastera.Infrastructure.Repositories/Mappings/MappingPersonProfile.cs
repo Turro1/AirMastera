@@ -40,10 +40,11 @@ public class MappingPersonProfile : Profile
             )
             .AfterMap((personDb, person) =>
             {
-                foreach (var item in personDb.Cars!)
-                {
-                    person.SaveCar(item.Id, item.Name, item.Model, item.Number, item.Avatar);
-                }
+                if (personDb.Cars?.Any() == true)
+                    foreach (var item in personDb.Cars!)
+                    {
+                        person.SaveCar(item.Id, item.Name, item.Model, item.Number, item.Avatar);
+                    }
             })
             .ForAllMembers(p => p.Ignore());
 

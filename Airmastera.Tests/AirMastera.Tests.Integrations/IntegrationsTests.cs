@@ -57,12 +57,6 @@ public class IntegrationsTests : IDisposable
         //Arrange
         var personId = Guid.Parse("b41acc31-6a42-4fda-ad4f-47296e0f0e4f");
 
-        if (expectedUpdatePerson.Car != null)
-        {
-            expectedUpdatePerson.Car.PersonId = personId;
-            expectedUpdatePerson.Car.Id = Guid.Parse("23766d30-3d14-45dc-9168-1ad5316c1356");
-        }
-
         expectedUpdatePerson.Id = personId;
 
         //Act

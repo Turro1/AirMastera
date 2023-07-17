@@ -91,12 +91,10 @@ public static class TestHelper
             FullName = updateUser.FullName,
             Car = new SaveCarRequest
             {
-                Id = Guid.NewGuid(),
                 Name = saveCar.Name,
                 Model = saveCar.Model,
                 Number = new Random().Next(100, 999).ToString(),
-                Avatar = saveCar.Avatar,
-                PersonId = default
+                Avatar = saveCar.Avatar
             }
         };
 

@@ -105,7 +105,7 @@ public class PersonRepository : IPersonRepository
 
     private async Task<PersonDb> GetPersonDb(Guid id, CancellationToken cancellationToken)
     {
-        var personDb = await _dbContext.Persons //.AsNoTracking().Include(db => db.Cars)
+        var personDb = await _dbContext.Persons.AsNoTracking().Include(db => db.Cars)
             .FirstOrDefaultAsync(person =>
                 person.Id == id, cancellationToken);
 

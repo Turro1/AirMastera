@@ -45,7 +45,5 @@ public interface IPersonService
     /// <returns></returns>
     Task<Car> GetCarAsync(Guid id, CancellationToken cancellationToken);
 
-    Task<CarDto> SaveCarAsync(Guid id, SaveCarRequest car, CancellationToken cancellationToken);
-
     Task DeletePersonAsync(Guid id, CancellationToken cancellationToken);
 }
