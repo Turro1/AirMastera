@@ -20,15 +20,17 @@ public class PersonRepository : IPersonRepository
         _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
     }
 
-    public async Task CreatePersonAsync(Person request, CancellationToken cancellationToken)
+    public async Task<PersonDto> CreatePersonAsync(Person request, CancellationToken cancellationToken)
     {
         var personDb = _mapper.Map<PersonDb>(request);
         _dbContext.Persons.Add(personDb);
 
         await _dbContext.SaveChangesAsync(cancellationToken);
+
+        return _mapper.Map<PersonDto>(personDb);
     }
 
-    public async Task UpdatePersonAsync(Person person, CancellationToken cancellationToken)
+    public async Task<PersonDto> UpdatePersonAsync(Person person, CancellationToken cancellationToken)
     {
         var updatedPersonDb = _mapper.Map<PersonDb>(person);
 
@@ -54,6 +56,8 @@ public class PersonRepository : IPersonRepository
         }
 
         await _dbContext.SaveChangesAsync(cancellationToken);
+
+        return _mapper.Map<PersonDto>(updatedPersonDb);
     }
 
     public async Task UpdateCarAsync(Car car, CancellationToken cancellationToken)
@@ -91,16 +95,14 @@ public class PersonRepository : IPersonRepository
     {
         var personDb = await GetPersonDb(id, cancellationToken);
 
-        var personDto = _mapper.Map<PersonDto>(personDb);
-        return personDto;
+        return _mapper.Map<PersonDto>(personDb);
     }
 
     public async Task<Person> GetPersonAsync(Guid id, CancellationToken cancellationToken)
     {
         var personDb = await GetPersonDb(id, cancellationToken);
 
-        var person = _mapper.Map<Person>(personDb);
-        return person;
+        return _mapper.Map<Person>(personDb);
     }
 
     private async Task<PersonDb> GetPersonDb(Guid id, CancellationToken cancellationToken)
@@ -135,16 +137,14 @@ public class PersonRepository : IPersonRepository
     {
         var carDb = await GetCarDb(id, cancellationToken);
 
-        var personDto = _mapper.Map<CarDto>(carDb);
-        return personDto;
+        return _mapper.Map<CarDto>(carDb);
     }
 
     public async Task<Car> GetCarAsync(Guid id, CancellationToken cancellationToken)
     {
         var carDb = await GetCarDb(id, cancellationToken);
 
-        var car = _mapper.Map<Car>(carDb);
-        return car;
+        return _mapper.Map<Car>(carDb);
     }
 
     public async Task DeletePersonAsync(Guid id, CancellationToken cancellationToken)

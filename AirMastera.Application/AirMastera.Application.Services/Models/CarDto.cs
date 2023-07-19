@@ -7,6 +7,6 @@ public class CarDto
     public string Model { get; set; }
     public string Number { get; set; }
     public Uri Avatar { get; set; }
-    public Guid PersonId { get; set; }
-    public PersonDto PersonDto { get; set; }
+
+    public IEnumerable<RepairDto> Repairs { get; set; }
 }

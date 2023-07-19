@@ -27,7 +27,7 @@ public class MyServiceCollection
             var config = builder.Build();
 
             var connectionString = config.GetConnectionString("PostgresConnection");
-            options.UseNpgsql(connectionString);
+            if (connectionString != null) options.UseNpgsql(connectionString);
         });
         serviceCollection.AddPersonServices();
 

@@ -1,5 +1,4 @@
 ﻿using Bogus;
-using Bogus.DataSets;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
 using AirMastera.Application.Services.Models;
@@ -40,7 +39,6 @@ public static class TestHelper
 
         var createPerson = new CreatePersonRequest
         {
-            Id = Guid.NewGuid(),
             Phone = createUser.Phone,
             FullName = createUser.FullName
         };
@@ -106,7 +104,8 @@ public static class TestHelper
 
     public static IEnumerable<object[]> CreateRepairParameters()
     {
-        string[] carParts = new string[] { "Двигатель", "Коробка передач", "Сцепление", "Тормозные колодки", "Шины" };
+        var carParts = new[] {"Амортизатор", "Стойка", "Пневмобалон", "Газовые упоры"};
+        var elementParts = new[] {"Задний правый", "Задний левый", "Передний правый", "Передний левый"};
 
         var car = new Faker<CarDb>("ru")
             .RuleFor(u => u.Name, x => x.Vehicle.Manufacturer())
@@ -124,8 +123,14 @@ public static class TestHelper
         var start = new DateTime(2023, 07, 13);
         var end = start.AddYears(1);
         var random = new Random();
+
         var range = (end - start).Days;
         var randomDate = start.AddDays(random.Next(range));
+        //Рандомная деталь
+        var randomIndex = random.Next(0, carParts.Length);
+        var randomCarPart = carParts[randomIndex];
+
+        var randomElementPart = elementParts[randomIndex];
 
         var updatePerson = new UpdateCarRequest
         {
@@ -135,9 +140,8 @@ public static class TestHelper
             Avatar = saveCar.Avatar,
             Repair = new SaveRepairRequest
             {
-                Id = Guid.NewGuid(),
-                PartName = saveRepair.PartName,
-                PartType = saveRepair.PartType,
+                PartName = randomCarPart,
+                PartType = randomElementPart,
                 Price = saveRepair.Price,
                 AppointmentDate = randomDate,
             }

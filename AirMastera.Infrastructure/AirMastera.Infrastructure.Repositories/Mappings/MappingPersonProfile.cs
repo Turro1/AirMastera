@@ -14,7 +14,7 @@ public class MappingPersonProfile : Profile
             {
                 var car = updateRequest.Car;
                 if (car != null)
-                    person.SaveCar(car.Id, car.Name, car.Model, car.Number, car.Avatar);
+                    person.SaveCar(car.Id ?? Guid.NewGuid(), car.Name, car.Model, car.Number, car.Avatar);
             });
 
         CreateMap<UpdateCarRequest, Car>()
@@ -27,7 +27,8 @@ public class MappingPersonProfile : Profile
 
         CreateMap<CreatePersonRequest, Person>()
             .ConstructUsing(person =>
-                new Person(person.Id,
+                new Person(
+                    Guid.NewGuid(),
                     person.FullName,
                     person.Phone));
 
@@ -47,6 +48,16 @@ public class MappingPersonProfile : Profile
                     }
             })
             .ForAllMembers(p => p.Ignore());
+
+        CreateMap<PersonDb, PersonDto>()
+            .ConstructUsing((x, context) =>
+                new PersonDto
+                {
+                    Id = x.Id,
+                    FullName = x.FullName,
+                    Phone = x.Phone,
+                    Cars = context.Mapper.Map<IEnumerable<CarDto>>(x.Cars)
+                });
 
         CreateMap<Person, PersonDb>()
             .ConstructUsing((person, context) => new PersonDb
@@ -100,6 +111,21 @@ public class MappingPersonProfile : Profile
                     item.CarDbId = car.Id;
                 }
             });
+
+        CreateMap<Car, CarDto>();
+
+        CreateMap<CarDb, CarDto>()
+            .ConstructUsing((x, context) =>
+                new CarDto
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    Model = x.Model,
+                    Number = x.Number,
+                    Avatar = x.Avatar
+                    //Repairs = context.
+                }
+            );
 
         CreateMap<Repair, RepairDb>()
             .ConstructUsing(repair =>

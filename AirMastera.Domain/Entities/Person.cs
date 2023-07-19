@@ -1,7 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.Text.RegularExpressions;
+using AirMastera.Domain.Entities.HelpingClasses;
 using AirMastera.Domain.Exceptions;
-using AirMastera.Domain.HelpingClasses;
 
 namespace AirMastera.Domain.Entities;
 

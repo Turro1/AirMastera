@@ -1,4 +1,4 @@
-﻿namespace AirMastera.Domain.HelpingClasses;
+﻿namespace AirMastera.Domain.Entities.HelpingClasses;
 
 public static class StringCheckExtension
 {

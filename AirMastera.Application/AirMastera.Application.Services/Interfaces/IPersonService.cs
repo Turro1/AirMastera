@@ -11,15 +11,16 @@ public interface IPersonService
     /// <param name="request"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task CreatePersonAsync(CreatePersonRequest request, CancellationToken cancellationToken);
+    Task<PersonDto> CreatePersonAsync(CreatePersonRequest request, CancellationToken cancellationToken);
 
     /// <summary>
     /// Обновление Person
     /// </summary>
+    /// <param name="personId"></param>
     /// <param name="request"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task UpdatePersonAsync(UpdatePersonRequest request, CancellationToken cancellationToken);
+    Task<PersonDto> UpdatePersonAsync(Guid personId, Guid? carId, UpdatePersonRequest request, CancellationToken cancellationToken);
 
     /// <summary>
     /// Обновление Person

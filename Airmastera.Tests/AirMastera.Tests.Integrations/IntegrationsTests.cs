@@ -10,16 +10,15 @@ namespace Integrations;
 
 public class IntegrationsTests : IDisposable
 {
-    private readonly IServiceProvider _serviceProvider;
     private readonly CancellationToken _cancellationToken;
     private readonly IPersonService _service;
 
     public IntegrationsTests()
     {
-        _serviceProvider = new MyServiceCollection().CreateServiceProvider();
+        var serviceProvider = new MyServiceCollection().CreateServiceProvider();
         _cancellationToken = new CancellationToken();
-        _service = _serviceProvider.GetRequiredService<IPersonService>();
-        var db = _serviceProvider.GetRequiredService<AirMasteraDbContext>();
+        _service = serviceProvider.GetRequiredService<IPersonService>();
+        var db = serviceProvider.GetRequiredService<AirMasteraDbContext>();
         db.MigrateAndReloadTypes();
     }
 
@@ -28,8 +27,8 @@ public class IntegrationsTests : IDisposable
     public async Task CreateAndSavePerson(CreatePersonRequest expectedCreatePerson)
     {
         //Act
-        await _service.CreatePersonAsync(expectedCreatePerson, _cancellationToken);
-        var actual = _service.GetPersonAsync(expectedCreatePerson.Id, _cancellationToken).Result;
+        var person = await _service.CreatePersonAsync(expectedCreatePerson, _cancellationToken);
+        var actual = _service.GetPersonAsync(person.Id, _cancellationToken).Result;
 
         //Assert
         actual.FullName.Should().Be(expectedCreatePerson.FullName);
@@ -40,11 +39,11 @@ public class IntegrationsTests : IDisposable
     public async Task UpdateAndSavePerson(UpdatePersonRequest expectedUpdatePerson)
     {
         //Arrange
-        expectedUpdatePerson.Id = Guid.Parse("b41acc31-6a42-4fda-ad4f-47296e0f0e4f");
+        var personId = Guid.Parse("b41acc31-6a42-4fda-ad4f-47296e0f0e4f");
 
         //Act
-        await _service.UpdatePersonAsync(expectedUpdatePerson, _cancellationToken);
-        var actual = _service.GetPersonAsync(expectedUpdatePerson.Id, _cancellationToken).Result;
+        await _service.UpdatePersonAsync(personId, null, expectedUpdatePerson, _cancellationToken);
+        var actual = _service.GetPersonAsync(personId, _cancellationToken).Result;
 
         //Assert
         actual.FullName.Should().Be(expectedUpdatePerson.FullName);
@@ -56,12 +55,11 @@ public class IntegrationsTests : IDisposable
     {
         //Arrange
         var personId = Guid.Parse("b41acc31-6a42-4fda-ad4f-47296e0f0e4f");
-
-        expectedUpdatePerson.Id = personId;
+        var carId = Guid.Parse("b41acc31-6a42-4fda-ad4f-47296e0f0e4f");
 
         //Act
-        await _service.UpdatePersonAsync(expectedUpdatePerson, _cancellationToken);
-        var actual = _service.GetPersonAsync(expectedUpdatePerson.Id, _cancellationToken).Result;
+        await _service.UpdatePersonAsync(personId, carId, expectedUpdatePerson, _cancellationToken);
+        var actual = _service.GetPersonAsync(personId, _cancellationToken).Result;
 
         //Assert
         actual.FullName.Should().Be(expectedUpdatePerson.FullName);
@@ -95,14 +93,14 @@ public class IntegrationsTests : IDisposable
     public async Task DeletePersonTest(CreatePersonRequest expectedCreatePerson)
     {
         //Arrange
-        await _service.CreatePersonAsync(expectedCreatePerson, _cancellationToken);
+        var person = await _service.CreatePersonAsync(expectedCreatePerson, _cancellationToken);
 
         //Act
-        await _service.DeletePersonAsync(expectedCreatePerson.Id, _cancellationToken);
-        var result = () => _service.GetPersonAsync(expectedCreatePerson.Id, _cancellationToken).Result;
+        await _service.DeletePersonAsync(person.Id, _cancellationToken);
+        var result = () => _service.GetPersonAsync(person.Id, _cancellationToken).Result;
 
         //Assert
-        result.Should().Throw<NotFoundException>().WithMessage($"Сущность c id: {expectedCreatePerson.Id} не найдена в базе данных...");
+        result.Should().Throw<NotFoundException>().WithMessage($"Сущность c id: {person.Id} не найдена в базе данных...");
     }
 
     [Theory(DisplayName = "Получаем запись из БД")]
@@ -110,8 +108,8 @@ public class IntegrationsTests : IDisposable
     public async void GetPerson(CreatePersonRequest expectedCreatePerson)
     {
         //Act
-        await _service.CreatePersonAsync(expectedCreatePerson, _cancellationToken);
-        var actual = _service.GetPersonAsync(expectedCreatePerson.Id, _cancellationToken).Result;
+        var person = await _service.CreatePersonAsync(expectedCreatePerson, _cancellationToken);
+        var actual = _service.GetPersonAsync(person.Id, _cancellationToken).Result;
         //Assert
         actual.FullName.Should().NotBeEmpty();
     }

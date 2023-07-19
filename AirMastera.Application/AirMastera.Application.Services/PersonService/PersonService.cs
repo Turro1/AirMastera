@@ -16,18 +16,22 @@ public class PersonService : IPersonService
         _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
     }
 
-    public async Task CreatePersonAsync(CreatePersonRequest personRequest, CancellationToken cancellationToken)
+    public async Task<PersonDto> CreatePersonAsync(CreatePersonRequest personRequest, CancellationToken cancellationToken)
     {
         var person = _mapper.Map<Person>(personRequest);
 
-        await _personRepository.CreatePersonAsync(person, cancellationToken);
+        return await _personRepository.CreatePersonAsync(person, cancellationToken);
     }
 
-    public async Task UpdatePersonAsync(UpdatePersonRequest request, CancellationToken cancellationToken)
+    public async Task<PersonDto> UpdatePersonAsync(Guid personId, Guid? carId, UpdatePersonRequest request, CancellationToken cancellationToken)
     {
+        request.Id = personId;
+        if (request.Car != null)
+            request.Car.Id = carId;
+
         var person = _mapper.Map<Person>(request);
 
-        await _personRepository.UpdatePersonAsync(person, cancellationToken);
+        return await _personRepository.UpdatePersonAsync(person, cancellationToken);
     }
 
     public async Task UpdateCarAsync(UpdateCarRequest request, CancellationToken cancellationToken)

@@ -11,7 +11,7 @@ public interface IPersonRepository
     /// <param name="person"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task CreatePersonAsync(Person person, CancellationToken cancellationToken);
+    Task<PersonDto> CreatePersonAsync(Person person, CancellationToken cancellationToken);
 
     /// <summary>
     /// Обновление Person
@@ -19,7 +19,7 @@ public interface IPersonRepository
     /// <param name="request"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task UpdatePersonAsync(Person request, CancellationToken cancellationToken);
+    Task<PersonDto> UpdatePersonAsync(Person request, CancellationToken cancellationToken);
 
     /// <summary>
     /// Обновление Person

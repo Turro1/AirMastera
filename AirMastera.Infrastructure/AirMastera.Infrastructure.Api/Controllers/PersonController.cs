@@ -1,4 +1,5 @@
-﻿using AirMastera.Application.Services.Interfaces;
+﻿using System.ComponentModel.DataAnnotations;
+using AirMastera.Application.Services.Interfaces;
 using AirMastera.Application.Services.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -25,9 +26,9 @@ public class PersonController : ControllerBase
     /// <param name="cancellationToken"></param>
     [HttpPost]
     [Route("Create")]
-    public async Task Create(CreatePersonRequest person, CancellationToken cancellationToken)
+    public async Task<ActionResult> Create(CreatePersonRequest person, CancellationToken cancellationToken)
     {
-        await _personService.CreatePersonAsync(person, cancellationToken);
+        return Ok(await _personService.CreatePersonAsync(person, cancellationToken));
     }
 
     /// <summary>
@@ -36,10 +37,11 @@ public class PersonController : ControllerBase
     /// <param name="request"></param>
     /// <param name="cancellationToken"></param>
     [HttpPost]
-    [Route("SaveOrUpdateCar")]
-    public async Task SaveOrUpdateCar(UpdatePersonRequest request, CancellationToken cancellationToken)
+    [Route("UpdatePerson")]
+    public async Task<ActionResult> UpdatePerson([FromQuery] [Required] Guid personId, [FromQuery] Guid? carId, [FromBody] UpdatePersonRequest request,
+        CancellationToken cancellationToken)
     {
-        await _personService.UpdatePersonAsync(request, cancellationToken);
+        return Ok(await _personService.UpdatePersonAsync(personId, carId, request, cancellationToken));
     }
 
     /// <summary>
@@ -48,8 +50,8 @@ public class PersonController : ControllerBase
     /// <param name="request"></param>
     /// <param name="cancellationToken"></param>
     [HttpPost]
-    [Route("SaveOrUpdateRepair")]
-    public async Task SaveOrUpdateRepair(UpdateCarRequest request, CancellationToken cancellationToken)
+    [Route("UpdateCar")]
+    public async Task UpdateCar(UpdateCarRequest request, CancellationToken cancellationToken)
     {
         await _personService.UpdateCarAsync(request, cancellationToken);
     }
@@ -65,5 +67,18 @@ public class PersonController : ControllerBase
     public async Task<ActionResult> Get(Guid id, CancellationToken cancellationToken)
     {
         return Ok(await _personService.GetPersonAsync(id, cancellationToken));
+    }
+
+    /// <summary>
+    /// Удалить клиента
+    /// </summary>
+    /// <param name="personId"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    [HttpDelete]
+    [Route("Delete")]
+    public async Task Delete([FromQuery] [Required] Guid personId, CancellationToken cancellationToken)
+    {
+        await _personService.DeletePersonAsync(personId, cancellationToken);
     }
 }
