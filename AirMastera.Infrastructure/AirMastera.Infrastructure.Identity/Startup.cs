@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using AirMastera.Infrastructure.Identity.Data;
 using AirMastera.Infrastructure.Identity.Models;
 using IdentityServer4.Models;
@@ -10,6 +11,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 
 namespace AirMastera.Infrastructure.Identity
@@ -65,6 +67,11 @@ namespace AirMastera.Infrastructure.Identity
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseStaticFiles(new StaticFileOptions()
+            {
+                FileProvider = new PhysicalFileProvider(Path.Combine(env.ContentRootPath,"Styles")),
+                RequestPath = "/styles"
+            });
             app.UseRouting();
             app.UseIdentityServer();
             app.UseEndpoints(endpoints =>
