@@ -5,6 +5,7 @@ using AirMastera.Domain.Exceptions;
 using AirMastera.Infrastructure.Data;
 using AirMastera.Infrastructure.Data.Models;
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 
 namespace AirMastera.Infrastructure.Repositories;
@@ -103,6 +104,14 @@ public class PersonRepository : IPersonRepository
         var personDb = await GetPersonDb(id, cancellationToken);
 
         return _mapper.Map<Person>(personDb);
+    }
+
+    public Task<IEnumerable<PersonDb>> GetAllPersonsAsync(CancellationToken cancellationToken)
+    {
+        var personsDb = _dbContext.Persons.AsQueryable();
+        var persons = personsDb.>().
+        
+        return persons;
     }
 
     private async Task<PersonDb> GetPersonDb(Guid id, CancellationToken cancellationToken)

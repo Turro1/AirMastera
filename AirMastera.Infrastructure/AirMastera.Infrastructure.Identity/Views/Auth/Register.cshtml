@@ -1,5 +1,8 @@
-@model AirMastera.Infrastructure.Identity.Models.RegisterViewModel
+@model RegisterViewModel
 
+<head>
+    <link href=@Url.Content("~/styles/app.css") rel="stylesheet" type="text/css"/>
+</head>
 <form asp-controller="Auth" asp-action="Register" method="post">
     <input type="hidden" asp-for="ReturnUrl"/>
     <div class="header">Sign Up</div>
@@ -22,5 +25,7 @@
         <button type="submit" class="button">Sign up</button>
     </div>
     <a asp-controller="Auth" asp-action="Login" asp-route-returnUrl="@Model.ReturnUrl"
-       class="switch-button">Login</a>
+       class="switch-button">
+        Login
+    </a>
 </form>

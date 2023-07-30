@@ -46,6 +46,14 @@ public interface IPersonRepository
     Task<Person> GetPersonAsync(Guid id, CancellationToken cancellationToken);
 
     /// <summary>
+    /// Получение Persons
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    Task<IEnumerable<Person>> GetAllPersonsAsync(CancellationToken cancellationToken);
+
+    /// <summary>
     /// Получение CarDto
     /// </summary>
     /// <param name="id"></param>

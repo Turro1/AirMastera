@@ -25,7 +25,7 @@ public class AuthController : Controller
     {
         var viewModel = new LoginViewModel
         {
-            ReturnUrl = returnUrl
+            ReturnUrl = "http://localhost:5000/index.html"
         };
         return View(viewModel);
     }
@@ -48,7 +48,7 @@ public class AuthController : Controller
         var result = await _signInManager.PasswordSignInAsync(loginViewModel.Username, loginViewModel.Password, false, false);
         if (result.Succeeded)
         {
-            return Redirect(loginViewModel.ReturnUrl);
+            return Redirect("http://localhost:5000/index.html");
         }
 
         ModelState.AddModelError(string.Empty, "Login error");
@@ -60,7 +60,7 @@ public class AuthController : Controller
     {
         var viewModel = new RegisterViewModel()
         {
-            ReturnUrl = returnUrl
+            ReturnUrl = "http://localhost:5000/index.html"
         };
         return View(viewModel);
     }
@@ -82,10 +82,18 @@ public class AuthController : Controller
         if (result.Succeeded)
         {
             await _signInManager.SignInAsync(user, false);
-            return Redirect(viewModel.ReturnUrl);
+            return Redirect("http://localhost:5000/index.html");
         }
 
         ModelState.AddModelError(string.Empty, "Error occurred");
         return View(viewModel);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> Logout(string logoutId)
+    {
+        await _signInManager.SignOutAsync();
+        var logoutRequest = await _interactionService.GetLogoutContextAsync(logoutId);
+        return Redirect("http://localhost:5000/index.html");
     }
 }
