@@ -87,7 +87,7 @@ public static class TestHelper
         {
             Phone = updateUser.Phone,
             FullName = updateUser.FullName,
-            Car = new SaveCarRequest
+            Car = new CreateOrUpdateCarRequest
             {
                 Name = saveCar.Name,
                 Model = saveCar.Model,
@@ -138,7 +138,7 @@ public static class TestHelper
             Model = saveCar.Model,
             Number = new Random().Next(100, 999).ToString(),
             Avatar = saveCar.Avatar,
-            Repair = new SaveRepairRequest
+            Repair = new CreateOrUpdateRepairRequest
             {
                 PartName = randomCarPart,
                 PartType = randomElementPart,

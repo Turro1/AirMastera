@@ -61,37 +61,6 @@ public class PersonRepository : IPersonRepository
         return _mapper.Map<PersonDto>(updatedPersonDb);
     }
 
-    public async Task UpdateCarAsync(Car car, CancellationToken cancellationToken)
-    {
-        var updatedPersonDb = _mapper.Map<CarDb>(car);
-
-        var personId = (await GetCarDb(car.Id, cancellationToken)).PersonDbId;
-        updatedPersonDb.PersonDbId = personId;
-
-        _dbContext.Update(updatedPersonDb);
-
-        if (updatedPersonDb.Repairs?.Any() == true)
-        {
-            var oldCars = await _dbContext.Repairs.AsNoTracking()
-                .Where(carDb => carDb.CarDbId == updatedPersonDb.Id)
-                .ToListAsync(cancellationToken);
-
-            foreach (var carDb in updatedPersonDb.Repairs)
-            {
-                if (oldCars.Any(we => we.Id == carDb.Id))
-                {
-                    _dbContext.Update(carDb);
-                }
-                else
-                {
-                    _dbContext.Add(carDb);
-                }
-            }
-        }
-
-        await _dbContext.SaveChangesAsync(cancellationToken);
-    }
-
     public async Task<PersonDto> GetPersonDtoAsync(Guid id, CancellationToken cancellationToken)
     {
         var personDb = await GetPersonDb(id, cancellationToken);
@@ -106,11 +75,14 @@ public class PersonRepository : IPersonRepository
         return _mapper.Map<Person>(personDb);
     }
 
-    public Task<IEnumerable<PersonDb>> GetAllPersonsAsync(CancellationToken cancellationToken)
+    public async Task<IEnumerable<Person>> GetAllPersonsAsync(int pageNumber, int pageSize, CancellationToken cancellationToken)
     {
-        var personsDb = _dbContext.Persons.AsQueryable();
-        var persons = personsDb.>().
-        
+        var persons = await _dbContext.Persons
+            .ProjectTo<Person>(_mapper.ConfigurationProvider)
+            .Skip((pageNumber - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync(cancellationToken);
+
         return persons;
     }
 
@@ -126,34 +98,6 @@ public class PersonRepository : IPersonRepository
         }
 
         return personDb;
-    }
-
-    private async Task<CarDb> GetCarDb(Guid id, CancellationToken cancellationToken)
-    {
-        var carDb = await _dbContext.Cars.AsNoTracking().Include(x => x.Repairs)
-            .FirstOrDefaultAsync(car =>
-                car.Id == id, cancellationToken);
-
-        if (carDb == null)
-        {
-            throw new NotFoundException("Сущность c id: " + id + " не найдена в базе данных...");
-        }
-
-        return carDb;
-    }
-
-    public async Task<CarDto> GetCarDtoAsync(Guid id, CancellationToken cancellationToken)
-    {
-        var carDb = await GetCarDb(id, cancellationToken);
-
-        return _mapper.Map<CarDto>(carDb);
-    }
-
-    public async Task<Car> GetCarAsync(Guid id, CancellationToken cancellationToken)
-    {
-        var carDb = await GetCarDb(id, cancellationToken);
-
-        return _mapper.Map<Car>(carDb);
     }
 
     public async Task DeletePersonAsync(Guid id, CancellationToken cancellationToken)

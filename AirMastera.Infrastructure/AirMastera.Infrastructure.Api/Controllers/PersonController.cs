@@ -1,17 +1,15 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using AirMastera.Application.Services.Interfaces;
 using AirMastera.Application.Services.Models;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AirMastera.Infrastructure.Api.Controllers;
 
 /// <summary>
-/// Контроллер для получения pong
+/// Контроллер Person
 /// </summary>
-[ApiVersion("1.0")]
 [ApiController]
-[Authorize]
+//[Authorize]
 [Route("api/[controller]")]
 public class PersonController : ControllerBase
 {
@@ -19,7 +17,7 @@ public class PersonController : ControllerBase
 
     public PersonController(IPersonService personService)
     {
-        _personService = personService;
+        _personService = personService ?? throw new ArgumentNullException(nameof(personService));
     }
 
     /// <summary>
@@ -48,28 +46,17 @@ public class PersonController : ControllerBase
     }
 
     /// <summary>
-    /// Обновление авто и создание ремонта
+    /// Получение клиентов
     /// </summary>
-    /// <param name="request"></param>
-    /// <param name="cancellationToken"></param>
-    [HttpPost]
-    [Route("UpdateCar")]
-    public async Task UpdateCar(UpdateCarRequest request, CancellationToken cancellationToken)
-    {
-        await _personService.UpdateCarAsync(request, cancellationToken);
-    }
-
-    /// <summary>
-    /// Получение персоны
-    /// </summary>
-    /// <param name="id"></param>
+    /// <param name="pageNumber"></param>
+    /// <param name="pageSize"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     [HttpGet]
     [Route("Get")]
-    public async Task<ActionResult> Get(Guid id, CancellationToken cancellationToken)
+    public async Task<ActionResult> Get(CancellationToken cancellationToken, int pageNumber = 1, int pageSize = 20)
     {
-        return Ok(await _personService.GetPersonAsync(id, cancellationToken));
+        return Ok(await _personService.GetAllPersonsAsync(pageNumber, pageSize, cancellationToken));
     }
 
     /// <summary>

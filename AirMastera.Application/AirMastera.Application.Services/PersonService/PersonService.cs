@@ -34,13 +34,6 @@ public class PersonService : IPersonService
         return await _personRepository.UpdatePersonAsync(person, cancellationToken);
     }
 
-    public async Task UpdateCarAsync(UpdateCarRequest request, CancellationToken cancellationToken)
-    {
-        var car = _mapper.Map<Car>(request);
-
-        await _personRepository.UpdateCarAsync(car, cancellationToken);
-    }
-
     public async Task<PersonDto> GetPersonDtoAsync(Guid id, CancellationToken cancellationToken)
     {
         return await _personRepository.GetPersonDtoAsync(id, cancellationToken);
@@ -51,9 +44,9 @@ public class PersonService : IPersonService
         return await _personRepository.GetPersonAsync(id, cancellationToken);
     }
 
-    public async Task<Car> GetCarAsync(Guid id, CancellationToken cancellationToken)
+    public async Task<IEnumerable<Person>> GetAllPersonsAsync(int pageNumber, int pageSize, CancellationToken cancellationToken)
     {
-        return await _personRepository.GetCarAsync(id, cancellationToken);
+        return await _personRepository.GetAllPersonsAsync(pageNumber, pageSize, cancellationToken);
     }
 
     public async Task DeletePersonAsync(Guid id, CancellationToken cancellationToken)

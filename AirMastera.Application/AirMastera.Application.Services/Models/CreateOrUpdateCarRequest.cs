@@ -2,7 +2,7 @@
 
 namespace AirMastera.Application.Services.Models;
 
-public class SaveCarRequest
+public class CreateOrUpdateCarRequest
 {
     [JsonIgnore]
     public Guid? Id { get; set; }
@@ -11,4 +11,6 @@ public class SaveCarRequest
     public string Model { get; set; }
     public string Number { get; set; }
     public Uri Avatar { get; set; }
+
+    public CreateOrUpdateRepairRequest? Repair { get; set; }
 }

@@ -11,5 +11,5 @@ public class UpdatePersonRequest
 
     public string Phone { get; set; }
 
-    public SaveCarRequest? Car { get; set; }
+    public CreateOrUpdateCarRequest? Car { get; set; }
 }

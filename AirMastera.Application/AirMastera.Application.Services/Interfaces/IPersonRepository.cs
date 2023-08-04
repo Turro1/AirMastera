@@ -22,14 +22,6 @@ public interface IPersonRepository
     Task<PersonDto> UpdatePersonAsync(Person request, CancellationToken cancellationToken);
 
     /// <summary>
-    /// Обновление Person
-    /// </summary>
-    /// <param name="request"></param>
-    /// <param name="cancellationToken"></param>
-    /// <returns></returns>
-    Task UpdateCarAsync(Car request, CancellationToken cancellationToken);
-
-    /// <summary>
     /// Получение PersonDto
     /// </summary>
     /// <param name="id"></param>
@@ -46,28 +38,13 @@ public interface IPersonRepository
     Task<Person> GetPersonAsync(Guid id, CancellationToken cancellationToken);
 
     /// <summary>
-    /// Получение Persons
+    /// Получение Pesrons
     /// </summary>
-    /// <param name="id"></param>
+    /// <param name="pageNumber"></param>
+    /// <param name="pageSize"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task<IEnumerable<Person>> GetAllPersonsAsync(CancellationToken cancellationToken);
-
-    /// <summary>
-    /// Получение CarDto
-    /// </summary>
-    /// <param name="id"></param>
-    /// <param name="cancellationToken"></param>
-    /// <returns></returns>
-    Task<CarDto> GetCarDtoAsync(Guid id, CancellationToken cancellationToken);
-
-    /// <summary>
-    /// Получение Car
-    /// </summary>
-    /// <param name="id"></param>
-    /// <param name="cancellationToken"></param>
-    /// <returns></returns>
-    Task<Car> GetCarAsync(Guid id, CancellationToken cancellationToken);
+    Task<IEnumerable<Person>> GetAllPersonsAsync(int pageNumber, int pageSize, CancellationToken cancellationToken);
 
     /// <summary>
     /// Удаление Person

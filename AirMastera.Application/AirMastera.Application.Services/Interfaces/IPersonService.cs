@@ -23,14 +23,6 @@ public interface IPersonService
     Task<PersonDto> UpdatePersonAsync(Guid personId, Guid? carId, UpdatePersonRequest request, CancellationToken cancellationToken);
 
     /// <summary>
-    /// Обновление Person
-    /// </summary>
-    /// <param name="request"></param>
-    /// <param name="cancellationToken"></param>
-    /// <returns></returns>
-    Task UpdateCarAsync(UpdateCarRequest request, CancellationToken cancellationToken);
-
-    /// <summary>
     /// Получение PersonDto
     /// </summary>
     /// <param name="id"></param>
@@ -39,12 +31,13 @@ public interface IPersonService
     Task<Person> GetPersonAsync(Guid id, CancellationToken cancellationToken);
 
     /// <summary>
-    /// Получение Car
+    /// Получение Persons
     /// </summary>
-    /// <param name="id"></param>
+    /// <param name="pageNumber"></param>
+    /// <param name="pageSize"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task<Car> GetCarAsync(Guid id, CancellationToken cancellationToken);
+    Task<IEnumerable<Person>> GetAllPersonsAsync(int pageNumber, int pageSize, CancellationToken cancellationToken);
 
     Task DeletePersonAsync(Guid id, CancellationToken cancellationToken);
 }

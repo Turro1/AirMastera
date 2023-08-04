@@ -20,8 +20,15 @@ public static class DependencyInjection
     {
         services.AddAutoMapper(typeof(MappingPersonProfile));
 
+        // repository
         services.AddTransient<IPersonRepository, PersonRepository>();
+        services.AddTransient<ICarRepository, CarRepository>();
+        services.AddTransient<IRepairRepository, RepairRepository>();
+
+        //services
         services.AddTransient<IPersonService, PersonService>();
+        services.AddTransient<ICarService, CarService>();
+        services.AddTransient<IRepairService, RepairService>();
 
         return services;
     }

@@ -75,6 +75,15 @@ public class MappingPersonProfile : Profile
                 }
             });
 
+        CreateMap<CreateOrUpdateCarRequest, Car>()
+            .AfterMap((request, car) =>
+            {
+                if (request.Repair != null)
+                {
+                    car.SaveRepair(request.Repair.Id, request.Repair.PartName, request.Repair.PartType, request.Repair.Price, request.Repair.AppointmentDate);
+                }
+            });
+
         CreateMap<CarDb, Car>()
             .ConstructUsing(carDb =>
                 new Car(
@@ -122,10 +131,9 @@ public class MappingPersonProfile : Profile
                     Name = x.Name,
                     Model = x.Model,
                     Number = x.Number,
-                    Avatar = x.Avatar
-                    //Repairs = context.
-                }
-            );
+                    Avatar = x.Avatar,
+                    Repairs = context.Mapper.Map<IEnumerable<RepairDto>>(x.Repairs)
+                });
 
         CreateMap<Repair, RepairDb>()
             .ConstructUsing(repair =>
@@ -137,5 +145,27 @@ public class MappingPersonProfile : Profile
                     Price = repair.Price,
                     AppointmentDate = repair.AppointmentDate,
                 });
+
+        CreateMap<RepairDb, RepairDto>()
+            .ForMember(x => x.Id,
+                expression => expression.MapFrom(x => x.Id))
+            .ForMember(x => x.AppointmentDate,
+                expression => expression.MapFrom(x => x.AppointmentDate))
+            .ForMember(x => x.PartName,
+                expression => expression.MapFrom(x => x.PartName))
+            .ForMember(x => x.PartType,
+                expression => expression.MapFrom(x => x.PartType))
+            .ForMember(x => x.Price,
+                expression => expression.MapFrom(x => x.Price));
+
+        CreateMap<CreateOrUpdateRepairRequest, Repair>()
+            .ForMember(x => x.PartName,
+                expression => expression.MapFrom(x => x.PartName))
+            .ForMember(x => x.PartType,
+                expression => expression.MapFrom(x => x.PartType))
+            .ForMember(x => x.Price,
+                expression => expression.MapFrom(x => x.Price))
+            .ForMember(x => x.AppointmentDate,
+                expression => expression.MapFrom(x => x.AppointmentDate));
     }
 }
