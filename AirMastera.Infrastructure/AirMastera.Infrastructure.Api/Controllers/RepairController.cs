@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using AirMastera.Application.Services.Interfaces;
 using AirMastera.Application.Services.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AirMastera.Infrastructure.Api.Controllers;
@@ -9,7 +10,7 @@ namespace AirMastera.Infrastructure.Api.Controllers;
 /// Контроллер для получения pong
 /// </summary>
 [ApiController]
-//[Authorize]
+[Authorize]
 [Route("api/[controller]")]
 public class RepairController : ControllerBase
 {

@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using AirMastera.Application.Services.Interfaces;
 using AirMastera.Application.Services.Models;
+using IdentityModel.Client;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,7 +11,7 @@ namespace AirMastera.Infrastructure.Api.Controllers;
 /// Контроллер для получения pong
 /// </summary>
 [ApiController]
-//[Authorize]
+[Authorize]
 [Route("api/[controller]")]
 public class CarController : ControllerBase
 {
@@ -19,6 +20,37 @@ public class CarController : ControllerBase
     public CarController(ICarService carService)
     {
         _carService = carService ?? throw new ArgumentNullException(nameof(carService));
+    }
+
+    /// <summary>
+    /// Получение токена авторизации
+    /// </summary>
+    /// <returns></returns>
+    [HttpGet]
+    [Route("GetToken")]
+    public async Task<ActionResult> GetToken()
+    {
+        var client = new HttpClient();
+        var disco = await client.GetDiscoveryDocumentAsync("https://localhost:5002");
+
+        if (disco.IsError)
+        {
+            return BadRequest("Error while discovering IdentityServer.");
+        }
+
+        var tokenResponse = await client.RequestClientCredentialsTokenAsync(new ClientCredentialsTokenRequest
+        {
+            Address = disco.TokenEndpoint,
+            ClientId = "airmastera-web-api",
+            Scope = "openid profile AirMasteraWebAPI"
+        });
+
+        if (tokenResponse.IsError)
+        {
+            return BadRequest("Error while requesting token.");
+        }
+
+        return Ok(tokenResponse.AccessToken);
     }
 
     /// <summary>

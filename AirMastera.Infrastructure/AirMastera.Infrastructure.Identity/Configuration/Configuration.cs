@@ -35,26 +35,26 @@ namespace AirMastera.Infrastructure.Identity.Configuration
             {
                 ClientId = "airmastera-web-api",
                 ClientName = "AirMastera Web",
-                AllowedGrantTypes = GrantTypes.Code,
+                AllowedGrantTypes = GrantTypes.ResourceOwnerPasswordAndClientCredentials,
                 RequireClientSecret = false,
                 RequirePkce = true,
                 RedirectUris =
                 {
-                    "http:// .../signin-oidc"
+                    "http://localhost:5001/signin-oidc"
                 },
                 AllowedCorsOrigins =
                 {
-                    "http:// ..."
+                    "http://localhost:5001"
                 },
                 PostLogoutRedirectUris =
                 {
-                    "http:// .../signin-oidc"
+                    "http://localhost:5001/signin-oidc"
                 },
                 AllowedScopes =
                 {
                     IdentityServerConstants.StandardScopes.OpenId,
                     IdentityServerConstants.StandardScopes.Profile,
-                    "AirmasteraWebAPI"
+                    "AirMasteraWebAPI"
                 },
                 AllowAccessTokensViaBrowser = true
             }
