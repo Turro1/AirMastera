@@ -10,6 +10,6 @@ public class DashboardInfo
     public string CarName { get; set; }
     public string CarModel { get; set; }
     public string PhoneNumber { get; set; }
-    public RepairStatus RepairStatus { get; set; }
+    public string RepairStatus { get; set; }
     public DateTime AppointmentDate { get; set; }
 }

@@ -1,6 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.Text.RegularExpressions;
-using AirMastera.Domain.Entities.HelpingClasses;
+using AirMastera.Domain.Entities.Extensions;
 using AirMastera.Domain.Exceptions;
 
 namespace AirMastera.Domain.Entities;

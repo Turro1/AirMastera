@@ -1,5 +1,6 @@
 ﻿using AirMastera.Application.Services.Interfaces;
 using AirMastera.Application.Services.Models;
+using AirMastera.Domain.Entities.Extensions;
 using AirMastera.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
@@ -20,7 +21,6 @@ public class DashboardService : IDashboardService
             .Include(x => x.Cars)
             .ThenInclude(carDb => carDb.Repairs);
 
-        //TODO: разобрать с отображением RepairStatus
         return await (from person in persons
             where person.Cars != null && person.Cars.Any()
             from car in person.Cars
@@ -33,7 +33,7 @@ public class DashboardService : IDashboardService
                 CarName = car.Name,
                 CarModel = car.Model,
                 AppointmentDate = repair.AppointmentDate,
-                RepairStatus = repair.RepairStatus,
+                RepairStatus = repair.RepairStatus.ToText(),
                 Id = repair.Id
             }).ToArrayAsync(cancellationToken);
     }
