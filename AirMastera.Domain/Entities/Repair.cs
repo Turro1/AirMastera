@@ -5,8 +5,8 @@ public class Repair
     public Guid Id { get; }
     public string PartName { get; set; }
     public string PartType { get; set; }
-
     public decimal Price { get; set; }
+    public RepairStatus RepairStatus { get; set; }
     public DateTime AppointmentDate { get; set; }
 
     public Repair(Guid id, string partName, string partType, decimal price, DateTime appointmentDate)
@@ -16,6 +16,7 @@ public class Repair
         SetPartType(partType);
         SetPrice(price);
         SetAppointmentDate(appointmentDate);
+        RepairStatus = RepairStatus.Created;
     }
 
     public void SetPartName(string partName)

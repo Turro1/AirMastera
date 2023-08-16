@@ -23,37 +23,6 @@ public class CarController : ControllerBase
     }
 
     /// <summary>
-    /// Получение токена авторизации
-    /// </summary>
-    /// <returns></returns>
-    [HttpGet]
-    [Route("GetToken")]
-    public async Task<ActionResult> GetToken()
-    {
-        var client = new HttpClient();
-        var disco = await client.GetDiscoveryDocumentAsync("https://localhost:5002");
-
-        if (disco.IsError)
-        {
-            return BadRequest("Error while discovering IdentityServer.");
-        }
-
-        var tokenResponse = await client.RequestClientCredentialsTokenAsync(new ClientCredentialsTokenRequest
-        {
-            Address = disco.TokenEndpoint,
-            ClientId = "airmastera-web-api",
-            Scope = "openid profile AirMasteraWebAPI"
-        });
-
-        if (tokenResponse.IsError)
-        {
-            return BadRequest("Error while requesting token.");
-        }
-
-        return Ok(tokenResponse.AccessToken);
-    }
-
-    /// <summary>
     /// Создание авто
     /// </summary>
     /// <param name="request"></param>

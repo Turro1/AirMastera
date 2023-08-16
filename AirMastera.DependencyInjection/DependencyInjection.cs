@@ -1,5 +1,5 @@
 ﻿using AirMastera.Application.Services.Interfaces;
-using AirMastera.Application.Services.PersonService;
+using AirMastera.Application.Services.Services;
 using AirMastera.Infrastructure.Repositories;
 using AirMastera.Infrastructure.Repositories.Mappings;
 using Microsoft.Extensions.DependencyInjection;
@@ -29,6 +29,7 @@ public static class DependencyInjection
         services.AddTransient<IPersonService, PersonService>();
         services.AddTransient<ICarService, CarService>();
         services.AddTransient<IRepairService, RepairService>();
+        services.AddTransient<IDashboardService, DashboardService>();
 
         return services;
     }

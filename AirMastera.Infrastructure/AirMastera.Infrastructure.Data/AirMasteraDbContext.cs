@@ -1,5 +1,8 @@
-﻿using AirMastera.Infrastructure.Data.Models;
+﻿using System.Runtime.CompilerServices;
+using AirMastera.Domain.Entities;
+using AirMastera.Infrastructure.Data.Models;
 using Microsoft.EntityFrameworkCore;
+using Npgsql;
 
 namespace AirMastera.Infrastructure.Data;
 
@@ -12,15 +15,26 @@ public class AirMasteraDbContext : DbContext
     public DbSet<CarDb> Cars { get; set; }
     public DbSet<RepairDb> Repairs { get; set; }
 
+#pragma warning disable CA2255
+    [ModuleInitializer]
+#pragma warning restore CA2255
+    public static void MapEnum()
+    {
+        NpgsqlConnection.GlobalTypeMapper.MapEnum<RepairStatus>();
+    }
+
     public AirMasteraDbContext(DbContextOptions<AirMasteraDbContext> options)
         : base(options)
     {
         AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
         AppContext.SetSwitch("Npgsql.DisableDateTimeInfinityConversions", true);
+        NpgsqlConnection.GlobalTypeMapper.MapEnum<RepairStatus>();
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.HasPostgresEnum<RepairStatus>();
+
         base.OnModelCreating(modelBuilder);
         modelBuilder
             .Entity<PersonDb>()

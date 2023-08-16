@@ -55,15 +55,16 @@ public class CarRepository : ICarRepository
                 .Where(carDb => carDb.CarDbId == updatedPersonDb.Id)
                 .ToListAsync(cancellationToken);
 
-            foreach (var carDb in updatedPersonDb.Repairs)
+            foreach (var repairDb in updatedPersonDb.Repairs)
             {
-                if (oldCars.Any(we => we.Id == carDb.Id))
+                if (oldCars.Any(we => we.Id == repairDb.Id))
                 {
-                    _dbContext.Update(carDb);
+                    _dbContext.Update(repairDb);
                 }
                 else
                 {
-                    _dbContext.Add(carDb);
+                    repairDb.RepairStatus = RepairStatus.Created;
+                    _dbContext.Add(repairDb);
                 }
             }
         }

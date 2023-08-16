@@ -143,7 +143,8 @@ public class MappingPersonProfile : Profile
                     PartName = repair.PartName,
                     PartType = repair.PartType,
                     Price = repair.Price,
-                    AppointmentDate = repair.AppointmentDate,
+                    RepairStatus = repair.RepairStatus,
+                    AppointmentDate = repair.AppointmentDate
                 });
 
         CreateMap<RepairDb, RepairDto>()

@@ -58,7 +58,7 @@ public class AuthController : Controller
     [HttpGet]
     public IActionResult Register(string returnUrl)
     {
-        var viewModel = new RegisterViewModel()
+        var viewModel = new RegisterViewModel
         {
             ReturnUrl = "http://localhost:5000/index.html"
         };
