@@ -12,6 +12,14 @@ public static class RegisterServices
 {
     public static IServiceCollection AddServices(this IServiceCollection services)
     {
+        services.AddCors(options =>
+        {
+            options.AddPolicy("AllowSpecificOrigin",
+                builder => builder.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader());
+        });
+
         services.AddControllers();
 
         services.AddVersionedApiExplorer(options => options.GroupNameFormat = "'v'VVV");

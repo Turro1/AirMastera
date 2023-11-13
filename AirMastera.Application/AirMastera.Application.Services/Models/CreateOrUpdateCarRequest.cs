@@ -12,5 +12,6 @@ public class CreateOrUpdateCarRequest
     public string Number { get; set; }
     public Uri Avatar { get; set; }
 
+    [JsonIgnore]
     public CreateOrUpdateRepairRequest? Repair { get; set; }
 }

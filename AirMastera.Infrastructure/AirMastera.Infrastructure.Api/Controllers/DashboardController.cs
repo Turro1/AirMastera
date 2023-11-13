@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace AirMastera.Infrastructure.Api.Controllers;
 
 [ApiController]
-[Authorize]
+//[Authorize]
 [Route("api/[controller]")]
 public class DashboardController : ControllerBase
 {
