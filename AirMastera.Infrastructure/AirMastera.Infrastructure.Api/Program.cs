@@ -5,6 +5,7 @@ using AirMastera.Infrastructure.Api.Services;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddServices();
 var app = builder.Build();
+app.UseCors("AllowSpecificOrigin");
 
 var startup = new Startup();
 
