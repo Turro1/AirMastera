@@ -61,6 +61,7 @@ public class RepairRepository : IRepairRepository
         var repairDb = await GetRepairDb(repairId, cancellationToken);
 
         _dbContext.Repairs.Remove(repairDb);
+        await _dbContext.SaveChangesAsync(cancellationToken);
     }
 
     private async Task<RepairDb> GetRepairDb(Guid id, CancellationToken cancellationToken)

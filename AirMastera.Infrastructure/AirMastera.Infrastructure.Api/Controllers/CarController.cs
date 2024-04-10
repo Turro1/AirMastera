@@ -11,7 +11,7 @@ namespace AirMastera.Infrastructure.Api.Controllers;
 /// Контроллер для получения pong
 /// </summary>
 [ApiController]
-[Authorize]
+//[Authorize]
 [Route("api/[controller]")]
 public class CarController : ControllerBase
 {
