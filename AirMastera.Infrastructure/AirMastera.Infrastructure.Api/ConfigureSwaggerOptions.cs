@@ -30,7 +30,7 @@ public class ConfigureSwaggerOptions : IConfigureOptions<SwaggerGenOptions>
                 {
                     Name = "Turro",
                     Email = string.Empty,
-                    Url = new Uri("https://t.me")
+                    Url = new Uri("https://t.me/turro")
                 },
                 License = new OpenApiLicense()
                 {

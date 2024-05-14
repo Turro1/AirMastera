@@ -32,7 +32,7 @@ public class DashboardService : IDashboardService
                 Avatar = car.Avatar,
                 CarName = car.Name,
                 CarModel = car.Model,
-                AppointmentDate = repair.AppointmentDate,
+                RepairDate = repair.AppointmentDate,
                 RepairStatus = repair.RepairStatus.ToText(),
                 Id = repair.Id
             }).ToArrayAsync(cancellationToken);

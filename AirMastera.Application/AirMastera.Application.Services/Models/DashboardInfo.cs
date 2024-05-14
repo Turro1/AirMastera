@@ -1,7 +1,4 @@
-﻿using AirMastera.Domain.Entities;
-using AirMastera.Infrastructure.Data.Models;
-
-namespace AirMastera.Application.Services.Models;
+﻿namespace AirMastera.Application.Services.Models;
 
 public class DashboardInfo
 {
@@ -11,5 +8,5 @@ public class DashboardInfo
     public string CarModel { get; set; }
     public string PhoneNumber { get; set; }
     public string RepairStatus { get; set; }
-    public DateTime AppointmentDate { get; set; }
+    public DateTime RepairDate { get; set; }
 }

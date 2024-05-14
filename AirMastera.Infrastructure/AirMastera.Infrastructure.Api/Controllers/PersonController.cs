@@ -10,7 +10,7 @@ namespace AirMastera.Infrastructure.Api.Controllers;
 /// Контроллер Person
 /// </summary>
 [ApiController]
-[Authorize]
+//[Authorize]
 [Route("api/[controller]")]
 public class PersonController : ControllerBase
 {
