@@ -77,7 +77,9 @@ public class CarRepository : ICarRepository
     public async Task DeleteCar(Guid carId, CancellationToken cancellationToken)
     {
         var car = await GetCarDb(carId, cancellationToken);
+
         _dbContext.Cars.Remove(car);
+        await _dbContext.SaveChangesAsync(cancellationToken);
     }
 
     private async Task<CarDb> GetCarDb(Guid id, CancellationToken cancellationToken)
