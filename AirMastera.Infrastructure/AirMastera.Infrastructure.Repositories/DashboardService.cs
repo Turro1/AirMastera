@@ -38,11 +38,13 @@ public class DashboardService : IDashboardService
             }).ToArrayAsync(cancellationToken);
 
         return dashboardInfos
-            .GroupBy(x => x.RepairDate)
+            .GroupBy(x => x.RepairDate.Date)
             .Select(x => new GroupDashboardInfo
         {
             RepairDate = x.Key,
             DashboardInfos = x.ToList()
-        }).ToList();
+        })
+            .OrderBy(x => x.RepairDate)
+            .ToList();
     }
 }
