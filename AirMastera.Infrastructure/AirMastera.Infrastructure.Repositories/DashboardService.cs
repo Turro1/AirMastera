@@ -15,13 +15,13 @@ public class DashboardService : IDashboardService
         _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
     }
 
-    public async Task<IEnumerable<DashboardInfo>> GetDashboardInfo(CancellationToken cancellationToken)
+    public async Task<IEnumerable<GroupDashboardInfo>> GetDashboardInfo(CancellationToken cancellationToken)
     {
         var persons = _dbContext.Persons
             .Include(x => x.Cars)
             .ThenInclude(carDb => carDb.Repairs);
 
-        return await (from person in persons
+        var dashboardInfos = await (from person in persons
             where person.Cars != null && person.Cars.Any()
             from car in person.Cars
             where car.Repairs != null && car.Repairs.Any()
@@ -36,5 +36,13 @@ public class DashboardService : IDashboardService
                 RepairStatus = repair.RepairStatus.ToText(),
                 Id = repair.Id
             }).ToArrayAsync(cancellationToken);
+
+        return dashboardInfos
+            .GroupBy(x => x.RepairDate)
+            .Select(x => new GroupDashboardInfo
+        {
+            RepairDate = x.Key,
+            DashboardInfos = x.ToList()
+        }).ToList();
     }
 }
