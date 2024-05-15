@@ -4,5 +4,5 @@ namespace AirMastera.Application.Services.Interfaces;
 
 public interface IDashboardService
 {
-    Task<IEnumerable<DashboardInfo>> GetDashboardInfo(CancellationToken cancellationToken);
+    Task<IEnumerable<GroupDashboardInfo>> GetDashboardInfo(CancellationToken cancellationToken);
 }
