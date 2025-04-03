@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace AirMastera.Infrastructure.Api.Controllers;
 
@@ -6,6 +7,7 @@ namespace AirMastera.Infrastructure.Api.Controllers;
 /// Контроллер для получения pong
 /// </summary>
 [ApiController]
+[Authorize]
 [Route("api/[controller]")]
 public class PingController : ControllerBase
 {

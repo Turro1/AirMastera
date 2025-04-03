@@ -1,9 +1,13 @@
 ﻿using System;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 using AirMastera.Infrastructure.Identity.Models;
 using IdentityServer4.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 
 namespace AirMastera.Infrastructure.Identity.Controllers;
 
@@ -48,7 +52,8 @@ public class AuthController : Controller
         var result = await _signInManager.PasswordSignInAsync(loginViewModel.Username, loginViewModel.Password, false, false);
         if (result.Succeeded)
         {
-            return Redirect("http://localhost:5000/index.html");
+            var token = GenerateJwtToken(user);
+            return Ok(new { Token = token });
         }
 
         ModelState.AddModelError(string.Empty, "Login error");
@@ -95,5 +100,23 @@ public class AuthController : Controller
         await _signInManager.SignOutAsync();
         var logoutRequest = await _interactionService.GetLogoutContextAsync(logoutId);
         return Redirect("http://localhost:5000/index.html");
+    }
+
+    private string GenerateJwtToken(AppUser user)
+    {
+        var tokenHandler = new JwtSecurityTokenHandler();
+        var key = Encoding.ASCII.GetBytes("YourSuperSecretKeyHere!"); // Задай длинный секретный ключ
+        var tokenDescriptor = new SecurityTokenDescriptor
+        {
+            Subject = new ClaimsIdentity(new Claim[]
+            {
+                new Claim(ClaimTypes.Name, user.UserName),
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+            }),
+            Expires = DateTime.UtcNow.AddHours(1),
+            SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+        };
+        var token = tokenHandler.CreateToken(tokenDescriptor);
+        return tokenHandler.WriteToken(token);
     }
 }

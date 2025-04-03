@@ -10,7 +10,7 @@ namespace AirMastera.Infrastructure.Api.Controllers;
 /// Контроллер Person
 /// </summary>
 [ApiController]
-//[Authorize]
+[Authorize]
 [Route("api/[controller]")]
 public class PersonController : ControllerBase
 {
@@ -55,6 +55,7 @@ public class PersonController : ControllerBase
     /// <returns></returns>
     [HttpGet]
     [Route("Get")]
+    [Produces("application/json2")]
     public async Task<ActionResult> Get(CancellationToken cancellationToken, int pageNumber = 1, int pageSize = 20)
     {
         return Ok(await _personService.GetAllPersonsAsync(pageNumber, pageSize, cancellationToken));

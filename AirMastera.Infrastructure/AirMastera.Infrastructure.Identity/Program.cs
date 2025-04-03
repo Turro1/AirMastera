@@ -15,14 +15,15 @@ namespace AirMastera.Infrastructure.Identity
             using (var scope = host.Services.CreateScope())
             {
                 var serviceProvider = scope.ServiceProvider;
+                var logger = serviceProvider.GetRequiredService<ILogger<Program>>();
                 try
                 {
                     var context = serviceProvider.GetRequiredService<AuthDbContext>();
                     DbInitializer.Initialize(context);
+                    logger.LogDebug( "База данных создана");
                 }
                 catch (Exception e)
                 {
-                    var logger = serviceProvider.GetRequiredService<ILogger<Program>>();
                     logger.LogDebug(e, "Не удалось создать базу данных");
                 }
             }
@@ -30,7 +31,7 @@ namespace AirMastera.Infrastructure.Identity
             host.Run();
         }
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
+        private static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>(); });
     }

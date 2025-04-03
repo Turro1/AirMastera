@@ -24,7 +24,7 @@ public class ConfigureSwaggerOptions : IConfigureOptions<SwaggerGenOptions>
             {
                 Version = apiVersion,
                 Title = $"AirMastera API {apiVersion}",
-                Description = "A sipmle ASP NET Core Web API. Proffesional way",
+                Description = "A simple ASP.NET Core Web API",
                 TermsOfService = new Uri("https://www.youtube.com"),
                 Contact = new OpenApiContact()
                 {
@@ -34,14 +34,14 @@ public class ConfigureSwaggerOptions : IConfigureOptions<SwaggerGenOptions>
                 }
             });
 
-            options.AddSecurityDefinition($"AuthToken {apiVersion}", new OpenApiSecurityScheme()
+            options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
             {
                 In = ParameterLocation.Header,
                 Type = SecuritySchemeType.Http,
                 BearerFormat = "JWT",
                 Scheme = "bearer",
                 Name = "Authorization",
-                Description = "Authorization token"
+                Description = "Enter JWT token with Bearer prefix (e.g., 'Bearer {token}')"
             });
 
             options.AddSecurityRequirement(new OpenApiSecurityRequirement
@@ -52,14 +52,15 @@ public class ConfigureSwaggerOptions : IConfigureOptions<SwaggerGenOptions>
                         Reference = new OpenApiReference()
                         {
                             Type = ReferenceType.SecurityScheme,
-                            Id = $"AuthToken {apiVersion}"
+                            Id = "Bearer"
                         }
                     },
-                    new string[] { }
+                    Array.Empty<string>()
                 }
             });
 
-            options.CustomOperationIds(apiDescription => apiDescription.TryGetMethodInfo(out MethodInfo methodInfo) ? methodInfo.Name : null);
+            options.CustomOperationIds(apiDescription =>
+                apiDescription.TryGetMethodInfo(out MethodInfo methodInfo) ? methodInfo.Name : null);
         }
     }
 }

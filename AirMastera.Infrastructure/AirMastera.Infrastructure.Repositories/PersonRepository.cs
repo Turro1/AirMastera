@@ -19,6 +19,7 @@ public class PersonRepository : IPersonRepository
     {
         _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
+        _dbContext.Database.EnsureCreated();
     }
 
     public async Task<PersonDto> CreatePersonAsync(Person request, CancellationToken cancellationToken)
