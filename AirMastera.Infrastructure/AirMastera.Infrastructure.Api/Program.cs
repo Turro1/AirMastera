@@ -12,6 +12,7 @@ builder.Services.AddControllers(options =>
 
 var app = builder.Build();
 app.UseCors("AllowSpecificOrigin");
+app.UseRequestLoggerHandler();
 app.UseCustomExceptionHandler();
 app.UseTimeLoggerMiddleware();
 

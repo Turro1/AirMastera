@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using AirMastera.DependencyInjection;
+using AirMastera.Infrastructure.Api.BackgroundServices;
 using AirMastera.Infrastructure.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -52,6 +53,7 @@ public static class RegisterServices
             options.Audience = "AirMasteraWebAPI";
             options.RequireHttpsMetadata = false;
         });
+        services.AddHostedService<QuoteBackgroundService>();
         services.AddPersonServices();
         services.AddApiVersioning();
         return services;
